@@ -330,3 +330,212 @@ function loadTool() {
     }
 }
 window.onload = loadTool;
+
+// ==========================================
+    // 7. NEW BATCH (Academic, Health, Converters)
+    // ==========================================
+
+    'pregnancy-calculator': {
+        title: "Pregnancy Due Date Calculator | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-red-400 max-w-lg mx-auto text-center">
+                <h1 class="text-3xl font-bold text-navy mb-2">Due Date Calculator</h1>
+                <p class="text-gray-600 mb-6">ඔසප් වීම ආරම්භ වූ අවසන් දිනය (LMP) ලබා දී දරුවා ලැබෙන ආසන්න දිනය ගණනය කරන්න.</p>
+                <div class="mb-6 text-left">
+                    <label class="block font-bold text-gray-700 mb-2">අවසන් දිනය (First day of your last period):</label>
+                    <input type="date" id="lmp-date" class="w-full p-3 border-2 border-gray-300 rounded-lg outline-none text-lg">
+                </div>
+                <button id="calc-preg" class="w-full bg-red-400 hover:bg-red-500 text-white font-bold py-3 rounded-lg shadow mb-6">Calculate Due Date</button>
+                <div id="preg-result" class="hidden bg-red-50 p-6 rounded-lg border border-red-200">
+                    <p class="text-gray-600 font-bold mb-2">දරුවා ලැබීමට නියමිත ආසන්න දිනය:</p>
+                    <div class="text-3xl font-black text-red-600" id="due-date-val">--</div>
+                </div>
+            </div>
+        `,
+        init: function() {
+            document.getElementById('calc-preg').addEventListener('click', () => {
+                const lmp = document.getElementById('lmp-date').value;
+                if(!lmp) return alert("කරුණාකර දිනයක් තෝරන්න!");
+                const date = new Date(lmp);
+                date.setDate(date.getDate() + 280); // Adds 280 days (40 weeks)
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('due-date-val').innerText = date.toLocaleDateString('si-LK', options);
+                document.getElementById('preg-result').classList.remove('hidden');
+            });
+        }
+    },
+
+    'weight-converter': {
+        title: "Weight & Mass Converter | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-indigo-400 max-w-lg mx-auto text-center">
+                <h1 class="text-3xl font-bold text-navy mb-6">Weight Converter</h1>
+                <div class="flex gap-4 mb-4">
+                    <input type="number" id="w-val" class="w-1/2 p-3 border-2 border-gray-300 rounded-lg outline-none" placeholder="Amount">
+                    <select id="w-from" class="w-1/2 p-3 border-2 border-gray-300 rounded-lg outline-none">
+                        <option value="1">Kilograms (kg)</option>
+                        <option value="0.001">Grams (g)</option>
+                        <option value="0.453592">Pounds (lb)</option>
+                        <option value="0.0283495">Ounces (oz)</option>
+                    </select>
+                </div>
+                <p class="font-bold text-gray-500 mb-4">To</p>
+                <select id="w-to" class="w-full p-3 border-2 border-gray-300 rounded-lg outline-none mb-6">
+                    <option value="0.453592">Pounds (lb)</option>
+                    <option value="1">Kilograms (kg)</option>
+                    <option value="0.001">Grams (g)</option>
+                    <option value="0.0283495">Ounces (oz)</option>
+                </select>
+                <button id="calc-weight" class="w-full bg-navy hover:bg-blue-900 text-white font-bold py-3 rounded-lg shadow mb-4">Convert</button>
+                <div id="w-res" class="text-3xl font-black text-indigo-600 hidden mt-4"></div>
+            </div>
+        `,
+        init: function() {
+            document.getElementById('calc-weight').addEventListener('click', () => {
+                const val = parseFloat(document.getElementById('w-val').value);
+                const from = parseFloat(document.getElementById('w-from').value);
+                const to = parseFloat(document.getElementById('w-to').value);
+                if(!val) return;
+                const result = (val * from) / to;
+                document.getElementById('w-res').innerText = result.toFixed(4);
+                document.getElementById('w-res').classList.remove('hidden');
+            });
+        }
+    },
+
+    'percentage-calculator': {
+        title: "Percentage Calculator | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-orange-500 max-w-lg mx-auto">
+                <h1 class="text-3xl font-bold text-navy mb-6 text-center">Percentage Calculator</h1>
+                
+                <div class="bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200">
+                    <p class="font-bold text-gray-700 mb-2">1. අගයක ප්‍රතිශතයක් සෙවීම:</p>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="p1-x" placeholder="%" class="w-20 p-2 border border-gray-300 rounded"> 
+                        <span>of</span> 
+                        <input type="number" id="p1-y" placeholder="Value" class="w-24 p-2 border border-gray-300 rounded">
+                        <button id="calc-p1" class="bg-orange-500 text-white px-4 py-2 rounded font-bold">=</button>
+                        <span id="res-p1" class="font-black text-xl text-navy ml-2">--</span>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <p class="font-bold text-gray-700 mb-2">2. අගයක් තවත් අගයකින් කොපමණ % ද?:</p>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="p2-x" placeholder="Val 1" class="w-24 p-2 border border-gray-300 rounded"> 
+                        <span>is what % of</span> 
+                        <input type="number" id="p2-y" placeholder="Val 2" class="w-24 p-2 border border-gray-300 rounded">
+                        <button id="calc-p2" class="bg-orange-500 text-white px-4 py-2 rounded font-bold">=</button>
+                        <span id="res-p2" class="font-black text-xl text-navy ml-2">--</span>
+                    </div>
+                </div>
+            </div>
+        `,
+        init: function() {
+            document.getElementById('calc-p1').addEventListener('click', () => {
+                const x = parseFloat(document.getElementById('p1-x').value);
+                const y = parseFloat(document.getElementById('p1-y').value);
+                if(x && y) document.getElementById('res-p1').innerText = ((x / 100) * y).toFixed(2);
+            });
+            document.getElementById('calc-p2').addEventListener('click', () => {
+                const x = parseFloat(document.getElementById('p2-x').value);
+                const y = parseFloat(document.getElementById('p2-y').value);
+                if(x && y) document.getElementById('res-p2').innerText = ((x / y) * 100).toFixed(2) + "%";
+            });
+        }
+    },
+
+    'url-encoder': {
+        title: "URL Encoder / Decoder | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-purple-500">
+                <h1 class="text-3xl font-bold text-navy mb-4 text-center">URL Encoder & Decoder</h1>
+                <textarea id="url-input" rows="4" class="w-full p-4 border-2 border-gray-300 rounded-lg outline-none mb-4" placeholder="Enter URL or text here..."></textarea>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <button id="btn-url-enc" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded shadow">Encode URL</button>
+                    <button id="btn-url-dec" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 rounded shadow">Decode URL</button>
+                </div>
+                <textarea id="url-output" rows="4" class="w-full p-4 bg-gray-100 border-2 border-gray-300 rounded-lg outline-none" readonly placeholder="Result will appear here..."></textarea>
+            </div>
+        `,
+        init: function() {
+            const input = document.getElementById('url-input');
+            const output = document.getElementById('url-output');
+            document.getElementById('btn-url-enc').addEventListener('click', () => {
+                output.value = encodeURIComponent(input.value);
+            });
+            document.getElementById('btn-url-dec').addEventListener('click', () => {
+                try { output.value = decodeURIComponent(input.value); } 
+                catch(e) { alert("Invalid URL encoded string!"); }
+            });
+        }
+    },
+
+    'slug-generator': {
+        title: "Slug Generator | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-blue-500 max-w-2xl mx-auto">
+                <h1 class="text-3xl font-bold text-navy mb-2 text-center">SEO Slug Generator</h1>
+                <p class="text-gray-600 mb-6 text-center">බ්ලොග් පෝස්ට් වල මාතෘකාව URL එකකට ගැලපෙන පරිදි සකසා ගන්න.</p>
+                <input type="text" id="slug-input" class="w-full p-4 border-2 border-gray-300 rounded-lg outline-none mb-4 text-lg" placeholder="Enter Post Title (e.g. My Awesome Post)">
+                <div class="relative">
+                    <input type="text" id="slug-output" class="w-full p-4 pr-24 bg-gray-100 border-2 border-gray-300 rounded-lg outline-none text-blue-600 font-bold font-mono" readonly>
+                    <button id="slug-copy" class="absolute right-2 top-2 bg-navy hover:bg-blue-900 text-white font-bold py-2 px-4 rounded transition">Copy</button>
+                </div>
+            </div>
+        `,
+        init: function() {
+            const input = document.getElementById('slug-input');
+            const output = document.getElementById('slug-output');
+            input.addEventListener('input', () => {
+                output.value = input.value.toLowerCase().trim()
+                    .replace(/[^\w\s-]/g, '') // Remove non-word chars
+                    .replace(/[\s_-]+/g, '-') // Swap spaces for hyphens
+                    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+            });
+            document.getElementById('slug-copy').addEventListener('click', () => {
+                output.select(); document.execCommand('copy'); alert('Slug Copied!');
+            });
+        }
+    },
+
+    'social-counter': {
+        title: "Social Media Character Counter | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-pink-500">
+                <h1 class="text-3xl font-bold text-navy mb-6 text-center">Social Media Character Checker</h1>
+                <div class="grid grid-cols-3 gap-4 mb-6 text-center">
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <div class="font-bold text-blue-600">Twitter (X)</div>
+                        <div class="text-2xl font-black mt-2" id="tw-count">0 / 280</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 rounded-lg border border-pink-200">
+                        <div class="font-bold text-pink-600">Instagram</div>
+                        <div class="text-2xl font-black mt-2" id="ig-count">0 / 2200</div>
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg border border-blue-300">
+                        <div class="font-bold text-blue-800">Facebook</div>
+                        <div class="text-2xl font-black mt-2" id="fb-count">0 / 63K</div>
+                    </div>
+                </div>
+                <textarea id="social-text" rows="6" class="w-full p-4 border-2 border-gray-300 rounded-lg outline-none" placeholder="Type your post here..."></textarea>
+            </div>
+        `,
+        init: function() {
+            const txt = document.getElementById('social-text');
+            txt.addEventListener('input', () => {
+                const len = txt.value.length;
+                
+                const tw = document.getElementById('tw-count');
+                tw.innerText = len + " / 280";
+                tw.className = len > 280 ? "text-2xl font-black mt-2 text-red-500" : "text-2xl font-black mt-2 text-navy";
+
+                const ig = document.getElementById('ig-count');
+                ig.innerText = len + " / 2200";
+                ig.className = len > 2200 ? "text-2xl font-black mt-2 text-red-500" : "text-2xl font-black mt-2 text-navy";
+                
+                document.getElementById('fb-count').innerText = len + " / 63K";
+            });
+        }
+    },
