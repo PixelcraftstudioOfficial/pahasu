@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 // 1. Firebase Config
@@ -19,42 +19,97 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// වෙනත් Tools වලට (උදා: Invoice) අඳුරගන්න Global Variable එකක් හදනවා
 window.isProUser = false; 
 
-// 2. Google Login එක
-window.loginWithGoogle = async function() {
-    try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        const userRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userRef);
+// =======================================
+// 2. GOOGLE LOGIN (For login.html only)
+// =======================================
+const btnGoogleLogin = document.getElementById('btn-google-login');
+if (btnGoogleLogin) {
+    btnGoogleLogin.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
 
-        // අලුත් කෙනෙක් නම් Database එකට ලියනවා
-        if (!userSnap.exists()) {
-            await setDoc(userRef, {
-                name: user.displayName,
+            if (!userSnap.exists()) {
+                await setDoc(userRef, {
+                    name: user.displayName,
+                    email: user.email,
+                    role: "free",
+                    pro_start_date: null,
+                    pro_end_date: null,
+                    created_at: new Date().toISOString()
+                });
+            }
+            window.location.href = "index.html"; // Login වුණාම Home එකට යනවා
+        } catch (error) {
+            console.error(error);
+            alert("Google Login Error: " + error.message);
+        }
+    });
+}
+
+// =======================================
+// 3. EMAIL / PASSWORD LOGIN
+// =======================================
+const formLogin = document.getElementById('form-login');
+if (formLogin) {
+    formLogin.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const pass = document.getElementById('login-pass').value;
+        try {
+            await signInWithEmailAndPassword(auth, email, pass);
+            window.location.href = "index.html";
+        } catch (error) {
+            alert("Login Error: කරුණාකර Email සහ Password නිවැරදිදැයි පරීක්ෂා කරන්න.");
+        }
+    });
+}
+
+// =======================================
+// 4. EMAIL / PASSWORD REGISTER
+// =======================================
+const formRegister = document.getElementById('form-register');
+if (formRegister) {
+    formRegister.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('reg-name') ? document.getElementById('reg-name').value : "User";
+        const email = document.getElementById('reg-email').value;
+        const pass = document.getElementById('reg-pass').value;
+        try {
+            const result = await createUserWithEmailAndPassword(auth, email, pass);
+            const user = result.user;
+            
+            await setDoc(doc(db, "users", user.uid), {
+                name: name,
                 email: user.email,
                 role: "free",
                 pro_start_date: null,
                 pro_end_date: null,
                 created_at: new Date().toISOString()
             });
+            window.location.href = "index.html";
+        } catch (error) {
+            alert("Registration Error: " + error.message);
         }
-        window.location.reload(); // Login වුණාම Page එක රීලෝඩ් කරනවා
-    } catch (error) {
-        console.error(error);
-        alert("Login වීමේදී දෝෂයක් ඇති විය!");
-    }
-};
+    });
+}
 
-// 3. Logout එක
+// =======================================
+// 5. LOGOUT FUNCTION
+// =======================================
 window.logoutUser = async function() {
     await signOut(auth);
     window.location.reload();
 };
 
-// 4. හැමවෙලේම User ගේ Status එක Check කරන කොටස
+// =======================================
+// 6. AUTH STATE LISTENER (Navbar Update)
+// =======================================
 onAuthStateChanged(auth, async (user) => {
     const navButtons = document.getElementById('nav-buttons');
     
@@ -63,40 +118,32 @@ onAuthStateChanged(auth, async (user) => {
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
         let roleBadge = "FREE";
+        let displayName = user.displayName ? user.displayName.split(" ")[0] : "User";
         
         if (userSnap.exists()) {
             const data = userSnap.data();
-            
-            // PRO ද කියලා Check කරනවා සහ Date එක Expire වෙලාද බලනවා
+            if(data.name) displayName = data.name.split(" ")[0];
+
             if (data.role === "pro" && data.pro_end_date) {
-                // අද දිනය (උදා: 2026-09-08)
                 const today = new Date().toISOString().split('T')[0];
-                
                 if (today <= data.pro_end_date) {
-                    window.isProUser = true; // මේක True වුණාම Invoice එකේ Watermark මැකෙනවා!
+                    window.isProUser = true; 
                     roleBadge = `<span class="text-gold font-bold">PRO</span>`;
                 } else {
-                    // Expire වෙලා නම් ඔටෝම ආයේ Free කරනවා
                     await updateDoc(userRef, { role: "free" });
                     alert("ඔබගේ PRO කාලසීමාව අවසන් වී ඇත. කරුණාකර නැවත Upgrade කරන්න.");
                 }
             }
         }
 
-        // Navbar එකේ නම පෙන්වීම
         if(navButtons) {
             navButtons.innerHTML = `
-                <span class="text-gray-300 mr-4 text-sm hidden md:inline">Hi, ${user.displayName.split(" ")[0]} (${roleBadge})</span>
+                <span class="text-gray-300 mr-4 text-sm hidden md:inline">Hi, ${displayName} (${roleBadge})</span>
                 <button onclick="logoutUser()" class="text-white hover:text-red-400 mr-4 font-semibold">Logout</button>
             `;
         }
     } else {
-        // ලොගින් වෙලා නැත්නම් සාමාන්‍ය බොත්තම් දෙක පෙන්වීම
-        if(navButtons) {
-            navButtons.innerHTML = `
-                <button onclick="loginWithGoogle()" class="text-white hover:text-gray-300 mr-4 font-semibold">Login</button>
-                <button class="bg-gold text-navy font-bold px-5 py-2 rounded shadow hover:bg-yellow-300 transition">Go Pro</button>
-            `;
-        }
+        // ලොගින් වෙලා නැත්නම් මොකුත් කරන්නේ නෑ! (HTML එකේ තියෙන ලින්ක්ස් ටික එහෙම්මම තියෙනවා)
+        // මේක හිස්ව තියෙන නිසා දැන් Go Pro Popup එකයි, login.html යන එකයි 100% ක් වැඩ කරනවා.
     }
 });
