@@ -25,7 +25,7 @@
                 <ul class="space-y-3 text-sm font-bold text-blue-200">
                     <li>✅ 30+ Free Utility Tools</li>
                     <li>✅ Secure & Fast Processing</li>
-                    <li>✅ No Software Installations</li>
+                    <li>✅ PRO Features & Support</li>
                 </ul>
             </div>
             <!-- Decorative circles -->
@@ -62,10 +62,6 @@
             <form id="form-register" class="hidden">
                 <h2 class="text-2xl font-bold text-navy mb-6">Create an Account</h2>
                 <div class="mb-4">
-                    <label class="block text-gray-700 font-bold mb-2 text-sm">Full Name</label>
-                    <input type="text" id="reg-name" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-navy focus:bg-white outline-none transition" placeholder="John Doe" required>
-                </div>
-                <div class="mb-4">
                     <label class="block text-gray-700 font-bold mb-2 text-sm">Email Address</label>
                     <input type="email" id="reg-email" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-navy focus:bg-white outline-none transition" placeholder="Enter your email" required>
                 </div>
@@ -84,6 +80,8 @@
                 <span class="text-gray-400 px-3 text-xs font-bold">OR</span>
                 <hr class="w-full border-gray-200">
             </div>
+            
+            <!-- මේකට තමයි Google ලොගින් එක සෙට් කරන්න ඕනේ -->
             <button id="btn-google-login" class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-lg shadow-sm transition flex items-center justify-center gap-3">
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
                 Continue with Google
@@ -91,7 +89,6 @@
         </div>
     </div>
 
-    <!-- UI Toggle Logic -->
     <script>
         const btnLogin = document.getElementById('btn-show-login');
         const btnRegister = document.getElementById('btn-show-register');
@@ -99,33 +96,17 @@
         const formRegister = document.getElementById('form-register');
 
         btnRegister.addEventListener('click', () => {
-            formLogin.classList.add('hidden');
-            formRegister.classList.remove('hidden');
-            
-            btnRegister.classList.replace('text-gray-500', 'text-navy');
-            btnRegister.classList.replace('hover:text-navy', 'bg-white');
-            btnRegister.classList.add('shadow-sm');
-
-            btnLogin.classList.replace('bg-white', 'text-gray-500');
-            btnLogin.classList.replace('text-navy', 'hover:text-navy');
-            btnLogin.classList.remove('shadow-sm');
+            formLogin.classList.add('hidden'); formRegister.classList.remove('hidden');
+            btnRegister.classList.replace('text-gray-500', 'text-navy'); btnRegister.classList.replace('hover:text-navy', 'bg-white'); btnRegister.classList.add('shadow-sm');
+            btnLogin.classList.replace('bg-white', 'text-gray-500'); btnLogin.classList.replace('text-navy', 'hover:text-navy'); btnLogin.classList.remove('shadow-sm');
         });
 
         btnLogin.addEventListener('click', () => {
-            formRegister.classList.add('hidden');
-            formLogin.classList.remove('hidden');
-            
-            btnLogin.classList.replace('text-gray-500', 'text-navy');
-            btnLogin.classList.replace('hover:text-navy', 'bg-white');
-            btnLogin.classList.add('shadow-sm');
-
-            btnRegister.classList.replace('bg-white', 'text-gray-500');
-            btnRegister.classList.replace('text-navy', 'hover:text-navy');
-            btnRegister.classList.remove('shadow-sm');
+            formRegister.classList.add('hidden'); formLogin.classList.remove('hidden');
+            btnLogin.classList.replace('text-gray-500', 'text-navy'); btnLogin.classList.replace('hover:text-navy', 'bg-white'); btnLogin.classList.add('shadow-sm');
+            btnRegister.classList.replace('bg-white', 'text-gray-500'); btnRegister.classList.replace('text-navy', 'hover:text-navy'); btnRegister.classList.remove('shadow-sm');
         });
     </script>
-    
-    <!-- Auth integration placeholder (auth.js) -->
     <script type="module" src="auth.js"></script>
 </body>
 </html>
