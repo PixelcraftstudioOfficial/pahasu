@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Pahasu.lk</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { navy: '#0f172a', gold: '#fbbf24', danger: '#ef4444' } } } }
+    </script>
+</head>
+<body class="bg-navy font-sans min-h-screen flex items-center justify-center p-4">
+
+    <!-- Admin Login Box -->
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden p-8 border-t-4 border-gold">
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-black text-navy mb-1">Pahasu <span class="text-gold">Admin</span></h1>
+            <p class="text-gray-500 text-sm">පාලක මණ්ඩලයට පමණයි (Authorized Personnel Only)</p>
+        </div>
+
+        <form id="admin-login-form">
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2 text-sm">Admin Email</label>
+                <input type="email" id="admin-email" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-navy focus:bg-white outline-none transition" placeholder="admin@pahasu.lk" required>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-gray-700 font-bold mb-2 text-sm">Password</label>
+                <input type="password" id="admin-pass" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-navy focus:bg-white outline-none transition" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="w-full bg-navy hover:bg-blue-900 text-white font-bold py-3 rounded-lg shadow-md transition">
+                Login to Admin Panel
+            </button>
+        </form>
+
+        <div class="text-center mt-6">
+            <a href="index.html" class="text-sm text-gray-500 hover:text-navy transition font-semibold">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Admin Login Logic Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCVvx29Bi_dK22QA9LvqmkQa47CDzlRSos",
+            authDomain: "pahasu-lk.firebaseapp.com",
+            projectId: "pahasu-lk",
+            storageBucket: "pahasu-lk.firebasestorage.app",
+            messagingSenderId: "817810048963",
+            appId: "1:817810048963:web:ac09ddc8f0e8c1ae455f76",
+            measurementId: "G-574L3FNX2J"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const form = document.getElementById('admin-login-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('admin-email').value;
+            const pass = document.getElementById('admin-pass').value;
+
+            try {
+                // 1. Firebase Auth හරහා ලොගින් වෙන්න බලනවා
+                const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+                const user = userCredential.user;
+
+                // 2. Database එකෙන් බලනවා මේ යූසර්ගේ role එක "admin" ද කියලා
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+
+                if (userSnap.exists() && userSnap.data().role === "admin") {
+                    // හැමදේම හරි නම් admin.html එකට යනවා
+                    window.location.href = "admin.html";
+                } else {
+                    // Admin කෙනෙක් නෙමෙයි නම් ලොගින් එක අසාර්ථකයි කියලා Sign Out කරලා දානවා
+                    await signOut(auth);
+                    alert("Access Denied! ඔබට Admin බලතල නොමැත.");
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Login Error: වැරදි ඊමේල් ලිපිනයක් හෝ මුරපදයකි.");
+            }
+        });
+    </script>
+</body>
+</html>
