@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Pahasu.lk</title>
+    <title>Login / Register - Pahasu.lk</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { theme: { extend: { colors: { navy: '#0f172a', gold: '#fbbf24' } } } }
@@ -11,44 +12,120 @@
 </head>
 <body class="bg-gray-100 font-sans min-h-screen flex items-center justify-center p-4">
 
-    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border-t-4 border-navy">
-        <div class="text-center mb-8">
-            <a href="index.html" class="text-4xl font-bold text-navy tracking-wide block mb-2">
-                Pahasu<span class="text-gold">.lk</span>
-            </a>
-            <p class="text-gray-500 font-semibold">Welcome Back! Login to access PRO tools.</p>
+    <!-- Main Container -->
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row relative">
+        
+        <!-- Left Side (Branding / Promo) -->
+        <div class="w-full md:w-1/2 bg-gradient-to-br from-navy to-blue-900 text-white p-10 flex flex-col justify-center relative overflow-hidden">
+            <div class="relative z-10">
+                <a href="index.html" class="text-5xl font-bold tracking-wide block mb-4 hover:opacity-90 transition">
+                    Pahasu<span class="text-gold">.lk</span>
+                </a>
+                <p class="text-lg text-blue-100 mb-6">සියලුම ඩිජිටල් මෙවලම් දැන් එකම තැනකින්. ඔබගේ වැඩ කටයුතු වඩාත් පහසු කරගන්න අදම අප හා එක්වන්න.</p>
+                <ul class="space-y-3 text-sm font-bold text-blue-200">
+                    <li>✅ 30+ Free Utility Tools</li>
+                    <li>✅ Secure & Fast Processing</li>
+                    <li>✅ No Software Installations</li>
+                </ul>
+            </div>
+            <!-- Decorative circles -->
+            <div class="absolute -bottom-16 -left-16 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-pulse"></div>
+            <div class="absolute -top-16 -right-16 w-64 h-64 bg-gold rounded-full mix-blend-multiply filter blur-2xl opacity-20 animate-pulse"></div>
         </div>
 
-        <form id="login-form">
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2">Email Address</label>
-                <input type="email" class="w-full p-3 border border-gray-300 rounded focus:border-navy outline-none" placeholder="Enter your email" required>
-            </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 font-bold mb-2">Password</label>
-                <input type="password" class="w-full p-3 border border-gray-300 rounded focus:border-navy outline-none" placeholder="Enter your password" required>
-            </div>
+        <!-- Right Side (Forms) -->
+        <div class="w-full md:w-1/2 p-8 md:p-12 bg-white">
             
-            <button type="submit" class="w-full bg-navy hover:bg-blue-900 text-white font-bold py-3 rounded shadow transition mb-4">
-                Login
+            <!-- Toggle Buttons -->
+            <div class="flex bg-gray-100 rounded-lg p-1 mb-8">
+                <button id="btn-show-login" class="flex-1 bg-white text-navy font-bold py-2 rounded shadow-sm transition">Login</button>
+                <button id="btn-show-register" class="flex-1 text-gray-500 hover:text-navy font-bold py-2 rounded transition">Register</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form id="form-login" class="block">
+                <h2 class="text-2xl font-bold text-navy mb-6">Welcome Back!</h2>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2 text-sm">Email Address</label>
+                    <input type="email" id="login-email" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-navy focus:bg-white outline-none transition" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-bold mb-2 text-sm">Password</label>
+                    <input type="password" id="login-pass" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-navy focus:bg-white outline-none transition" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="w-full bg-navy hover:bg-blue-900 text-white font-bold py-3 rounded-lg shadow-md transition mb-4">
+                    Login to Pahasu
+                </button>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form id="form-register" class="hidden">
+                <h2 class="text-2xl font-bold text-navy mb-6">Create an Account</h2>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2 text-sm">Full Name</label>
+                    <input type="text" id="reg-name" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-navy focus:bg-white outline-none transition" placeholder="John Doe" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2 text-sm">Email Address</label>
+                    <input type="email" id="reg-email" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-navy focus:bg-white outline-none transition" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-bold mb-2 text-sm">Password</label>
+                    <input type="password" id="reg-pass" class="w-full p-3 bg-gray-50 border border-gray-300 rounded-lg focus:border-navy focus:bg-white outline-none transition" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="w-full bg-gold hover:bg-yellow-500 text-navy font-bold py-3 rounded-lg shadow-md transition mb-4">
+                    Create Free Account
+                </button>
+            </form>
+
+            <!-- Social Login -->
+            <div class="flex items-center justify-between mt-6 mb-6">
+                <hr class="w-full border-gray-200">
+                <span class="text-gray-400 px-3 text-xs font-bold">OR</span>
+                <hr class="w-full border-gray-200">
+            </div>
+            <button id="btn-google-login" class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-lg shadow-sm transition flex items-center justify-center gap-3">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
+                Continue with Google
             </button>
-        </form>
-
-        <div class="flex items-center justify-between mt-4 mb-4">
-            <hr class="w-full border-gray-300">
-            <span class="text-gray-400 px-3 font-bold">OR</span>
-            <hr class="w-full border-gray-300">
         </div>
-
-        <button class="w-full bg-white border-2 border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded shadow-sm transition flex items-center justify-center gap-2">
-            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
-            Continue with Google
-        </button>
-
-        <p class="text-center text-gray-500 mt-6">
-            Don't have an account? <a href="#" class="text-navy font-bold hover:underline">Sign up for free</a>
-        </p>
     </div>
 
+    <!-- UI Toggle Logic -->
+    <script>
+        const btnLogin = document.getElementById('btn-show-login');
+        const btnRegister = document.getElementById('btn-show-register');
+        const formLogin = document.getElementById('form-login');
+        const formRegister = document.getElementById('form-register');
+
+        btnRegister.addEventListener('click', () => {
+            formLogin.classList.add('hidden');
+            formRegister.classList.remove('hidden');
+            
+            btnRegister.classList.replace('text-gray-500', 'text-navy');
+            btnRegister.classList.replace('hover:text-navy', 'bg-white');
+            btnRegister.classList.add('shadow-sm');
+
+            btnLogin.classList.replace('bg-white', 'text-gray-500');
+            btnLogin.classList.replace('text-navy', 'hover:text-navy');
+            btnLogin.classList.remove('shadow-sm');
+        });
+
+        btnLogin.addEventListener('click', () => {
+            formRegister.classList.add('hidden');
+            formLogin.classList.remove('hidden');
+            
+            btnLogin.classList.replace('text-gray-500', 'text-navy');
+            btnLogin.classList.replace('hover:text-navy', 'bg-white');
+            btnLogin.classList.add('shadow-sm');
+
+            btnRegister.classList.replace('bg-white', 'text-gray-500');
+            btnRegister.classList.replace('text-navy', 'hover:text-navy');
+            btnRegister.classList.remove('shadow-sm');
+        });
+    </script>
+    
+    <!-- Auth integration placeholder (auth.js) -->
+    <script type="module" src="auth.js"></script>
 </body>
 </html>
