@@ -84,12 +84,41 @@ const toolsRegistry = {
                 const g = document.getElementById('cal-gender').value;
                 if(!a || !h || !w) return alert("සියලුම දත්ත ලබා දෙන්න!");
                 
-                // Mifflin-St Jeor Equation
                 let bmr = (10 * w) + (6.25 * h) - (5 * a);
                 bmr = (g === 'm') ? bmr + 5 : bmr - 161;
                 
                 document.getElementById('cal-value').innerText = Math.round(bmr) + " kcal";
                 document.getElementById('cal-result').classList.remove('hidden');
+            });
+        }
+    },
+
+    'pregnancy-calculator': {
+        title: "Pregnancy Due Date Calculator | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-red-400 max-w-lg mx-auto text-center">
+                <h1 class="text-3xl font-bold text-navy mb-2">Due Date Calculator</h1>
+                <p class="text-gray-600 mb-6">ඔසප් වීම ආරම්භ වූ අවසන් දිනය (LMP) ලබා දී දරුවා ලැබෙන ආසන්න දිනය ගණනය කරන්න.</p>
+                <div class="mb-6 text-left">
+                    <label class="block font-bold text-gray-700 mb-2">අවසන් දිනය (First day of your last period):</label>
+                    <input type="date" id="lmp-date" class="w-full p-3 border-2 border-gray-300 rounded-lg outline-none text-lg">
+                </div>
+                <button id="calc-preg" class="w-full bg-red-400 hover:bg-red-500 text-white font-bold py-3 rounded-lg shadow mb-6">Calculate Due Date</button>
+                <div id="preg-result" class="hidden bg-red-50 p-6 rounded-lg border border-red-200">
+                    <p class="text-gray-600 font-bold mb-2">දරුවා ලැබීමට නියමිත ආසන්න දිනය:</p>
+                    <div class="text-3xl font-black text-red-600" id="due-date-val">--</div>
+                </div>
+            </div>
+        `,
+        init: function() {
+            document.getElementById('calc-preg').addEventListener('click', () => {
+                const lmp = document.getElementById('lmp-date').value;
+                if(!lmp) return alert("කරුණාකර දිනයක් තෝරන්න!");
+                const date = new Date(lmp);
+                date.setDate(date.getDate() + 280); 
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('due-date-val').innerText = date.toLocaleDateString('si-LK', options);
+                document.getElementById('preg-result').classList.remove('hidden');
             });
         }
     },
@@ -131,13 +160,48 @@ const toolsRegistry = {
                 const from = parseFloat(document.getElementById('len-from').value);
                 const to = parseFloat(document.getElementById('len-to').value);
                 if(!val) return;
-                
-                // Convert to meters first, then to target
                 const inMeters = val * from;
                 const result = inMeters / to;
-                
                 document.getElementById('len-res').innerText = result.toFixed(4);
                 document.getElementById('len-res').classList.remove('hidden');
+            });
+        }
+    },
+
+    'weight-converter': {
+        title: "Weight & Mass Converter | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-indigo-400 max-w-lg mx-auto text-center">
+                <h1 class="text-3xl font-bold text-navy mb-6">Weight Converter</h1>
+                <div class="flex gap-4 mb-4">
+                    <input type="number" id="w-val" class="w-1/2 p-3 border-2 border-gray-300 rounded-lg outline-none" placeholder="Amount">
+                    <select id="w-from" class="w-1/2 p-3 border-2 border-gray-300 rounded-lg outline-none">
+                        <option value="1">Kilograms (kg)</option>
+                        <option value="0.001">Grams (g)</option>
+                        <option value="0.453592">Pounds (lb)</option>
+                        <option value="0.0283495">Ounces (oz)</option>
+                    </select>
+                </div>
+                <p class="font-bold text-gray-500 mb-4">To</p>
+                <select id="w-to" class="w-full p-3 border-2 border-gray-300 rounded-lg outline-none mb-6">
+                    <option value="0.453592">Pounds (lb)</option>
+                    <option value="1">Kilograms (kg)</option>
+                    <option value="0.001">Grams (g)</option>
+                    <option value="0.0283495">Ounces (oz)</option>
+                </select>
+                <button id="calc-weight" class="w-full bg-navy hover:bg-blue-900 text-white font-bold py-3 rounded-lg shadow mb-4">Convert</button>
+                <div id="w-res" class="text-3xl font-black text-indigo-600 hidden mt-4"></div>
+            </div>
+        `,
+        init: function() {
+            document.getElementById('calc-weight').addEventListener('click', () => {
+                const val = parseFloat(document.getElementById('w-val').value);
+                const from = parseFloat(document.getElementById('w-from').value);
+                const to = parseFloat(document.getElementById('w-to').value);
+                if(!val) return;
+                const result = (val * from) / to;
+                document.getElementById('w-res').innerText = result.toFixed(4);
+                document.getElementById('w-res').classList.remove('hidden');
             });
         }
     },
@@ -165,6 +229,43 @@ const toolsRegistry = {
                 const tags = words.filter(w => w.length > 0).map(w => '#' + w);
                 const extra = ['#trending', '#viral', '#pahasu', '#foryou', '#srilanka'];
                 document.getElementById('hash-result').value = [...tags, ...extra].join(' ');
+            });
+        }
+    },
+
+    'social-counter': {
+        title: "Social Media Character Counter | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-pink-500">
+                <h1 class="text-3xl font-bold text-navy mb-6 text-center">Social Media Character Checker</h1>
+                <div class="grid grid-cols-3 gap-4 mb-6 text-center">
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                        <div class="font-bold text-blue-600">Twitter (X)</div>
+                        <div class="text-2xl font-black mt-2" id="tw-count">0 / 280</div>
+                    </div>
+                    <div class="bg-pink-50 p-4 rounded-lg border border-pink-200">
+                        <div class="font-bold text-pink-600">Instagram</div>
+                        <div class="text-2xl font-black mt-2" id="ig-count">0 / 2200</div>
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg border border-blue-300">
+                        <div class="font-bold text-blue-800">Facebook</div>
+                        <div class="text-2xl font-black mt-2" id="fb-count">0 / 63K</div>
+                    </div>
+                </div>
+                <textarea id="social-text" rows="6" class="w-full p-4 border-2 border-gray-300 rounded-lg outline-none" placeholder="Type your post here..."></textarea>
+            </div>
+        `,
+        init: function() {
+            const txt = document.getElementById('social-text');
+            txt.addEventListener('input', () => {
+                const len = txt.value.length;
+                const tw = document.getElementById('tw-count');
+                tw.innerText = len + " / 280";
+                tw.className = len > 280 ? "text-2xl font-black mt-2 text-red-500" : "text-2xl font-black mt-2 text-navy";
+                const ig = document.getElementById('ig-count');
+                ig.innerText = len + " / 2200";
+                ig.className = len > 2200 ? "text-2xl font-black mt-2 text-red-500" : "text-2xl font-black mt-2 text-navy";
+                document.getElementById('fb-count').innerText = len + " / 63K";
             });
         }
     },
@@ -197,6 +298,32 @@ const toolsRegistry = {
                     errBox.classList.remove('hidden');
                     document.getElementById('json-output').value = "";
                 }
+            });
+        }
+    },
+
+    'url-encoder': {
+        title: "URL Encoder / Decoder | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-purple-500">
+                <h1 class="text-3xl font-bold text-navy mb-4 text-center">URL Encoder & Decoder</h1>
+                <textarea id="url-input" rows="4" class="w-full p-4 border-2 border-gray-300 rounded-lg outline-none mb-4" placeholder="Enter URL or text here..."></textarea>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <button id="btn-url-enc" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded shadow">Encode URL</button>
+                    <button id="btn-url-dec" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 rounded shadow">Decode URL</button>
+                </div>
+                <textarea id="url-output" rows="4" class="w-full p-4 bg-gray-100 border-2 border-gray-300 rounded-lg outline-none" readonly placeholder="Result will appear here..."></textarea>
+            </div>
+        `,
+        init: function() {
+            const input = document.getElementById('url-input');
+            const output = document.getElementById('url-output');
+            document.getElementById('btn-url-enc').addEventListener('click', () => {
+                output.value = encodeURIComponent(input.value);
+            });
+            document.getElementById('btn-url-dec').addEventListener('click', () => {
+                try { output.value = decodeURIComponent(input.value); } 
+                catch(e) { alert("Invalid URL encoded string!"); }
             });
         }
     },
@@ -264,141 +391,11 @@ const toolsRegistry = {
                 const r = parseFloat(document.getElementById('loan-rate').value) / 100 / 12;
                 const n = parseFloat(document.getElementById('loan-months').value);
                 if(!p || !r || !n) return alert("දත්ත ඇතුලත් කරන්න!");
-                
                 const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
                 const total = emi * n;
-                
                 document.getElementById('emi-val').innerText = "රු. " + emi.toFixed(2);
                 document.getElementById('total-pay').innerText = "රු. " + total.toFixed(2);
                 document.getElementById('loan-res').classList.remove('hidden');
-            });
-        }
-    },
-
-    // ==========================================
-    // 6. TEXT & CONTENT TOOLS
-    // ==========================================
-
-    'lorem-generator': {
-        title: "Lorem Ipsum Generator | Pahasu.lk",
-        html: `
-            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-navy max-w-2xl mx-auto text-center">
-                <h1 class="text-3xl font-bold text-navy mb-4">Lorem Ipsum Generator</h1>
-                <div class="flex items-center justify-center gap-4 mb-6">
-                    <label class="font-bold text-gray-700">Paragraphs:</label>
-                    <input type="number" id="lorem-count" value="3" min="1" max="10" class="w-20 p-2 border-2 border-gray-300 rounded text-center">
-                    <button id="gen-lorem" class="bg-navy hover:bg-blue-900 text-white font-bold py-2 px-6 rounded shadow">Generate</button>
-                </div>
-                <textarea id="lorem-out" rows="8" class="w-full p-4 bg-gray-50 border-2 border-gray-300 rounded-lg outline-none mb-4" readonly></textarea>
-            </div>
-        `,
-        init: function() {
-            const loremText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            
-            document.getElementById('gen-lorem').addEventListener('click', () => {
-                const count = parseInt(document.getElementById('lorem-count').value);
-                let result = [];
-                for(let i=0; i<count; i++) result.push(loremText);
-                document.getElementById('lorem-out').value = result.join('\n\n');
-            });
-            document.getElementById('gen-lorem').click();
-        }
-    },
-    
-    // (Previously Done Tools to keep them working)
-    'password-generator': { /* (PRO Password Generator Logic Here - Same as previous code) */ },
-    'qr-generator': { /* (PRO QR Generator Logic Here - Same as previous code) */ },
-    'word-counter': { /* (Word Counter Logic Here - Same as previous code) */ },
-    'age-calculator': { /* (Age Calculator Logic Here - Same as previous code) */ }
-};
-
-// ==========================================
-// MASTER LOADER LOGIC
-// ==========================================
-function loadTool() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const appName = urlParams.get('app'); 
-    const container = document.getElementById('app-container');
-
-    if (appName && toolsRegistry[appName]) {
-        const tool = toolsRegistry[appName];
-        document.title = tool.title;
-        container.innerHTML = tool.html;
-        if (tool.init) tool.init();
-    } else {
-        container.innerHTML = \`<div class="text-center py-20"><h1 class="text-5xl text-red-500 font-bold mb-4">404</h1><h2 class="text-2xl text-gray-700 font-bold">Tool Development in Progress...</h2><p class="mt-4 text-gray-500">මෙම මෙවලම ඉක්මනින්ම එකතු වනු ඇත.</p></div>\`;
-    }
-}
-window.onload = loadTool;
-
-// ==========================================
-    // 7. NEW BATCH (Academic, Health, Converters)
-    // ==========================================
-
-    'pregnancy-calculator': {
-        title: "Pregnancy Due Date Calculator | Pahasu.lk",
-        html: `
-            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-red-400 max-w-lg mx-auto text-center">
-                <h1 class="text-3xl font-bold text-navy mb-2">Due Date Calculator</h1>
-                <p class="text-gray-600 mb-6">ඔසප් වීම ආරම්භ වූ අවසන් දිනය (LMP) ලබා දී දරුවා ලැබෙන ආසන්න දිනය ගණනය කරන්න.</p>
-                <div class="mb-6 text-left">
-                    <label class="block font-bold text-gray-700 mb-2">අවසන් දිනය (First day of your last period):</label>
-                    <input type="date" id="lmp-date" class="w-full p-3 border-2 border-gray-300 rounded-lg outline-none text-lg">
-                </div>
-                <button id="calc-preg" class="w-full bg-red-400 hover:bg-red-500 text-white font-bold py-3 rounded-lg shadow mb-6">Calculate Due Date</button>
-                <div id="preg-result" class="hidden bg-red-50 p-6 rounded-lg border border-red-200">
-                    <p class="text-gray-600 font-bold mb-2">දරුවා ලැබීමට නියමිත ආසන්න දිනය:</p>
-                    <div class="text-3xl font-black text-red-600" id="due-date-val">--</div>
-                </div>
-            </div>
-        `,
-        init: function() {
-            document.getElementById('calc-preg').addEventListener('click', () => {
-                const lmp = document.getElementById('lmp-date').value;
-                if(!lmp) return alert("කරුණාකර දිනයක් තෝරන්න!");
-                const date = new Date(lmp);
-                date.setDate(date.getDate() + 280); // Adds 280 days (40 weeks)
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                document.getElementById('due-date-val').innerText = date.toLocaleDateString('si-LK', options);
-                document.getElementById('preg-result').classList.remove('hidden');
-            });
-        }
-    },
-
-    'weight-converter': {
-        title: "Weight & Mass Converter | Pahasu.lk",
-        html: `
-            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-indigo-400 max-w-lg mx-auto text-center">
-                <h1 class="text-3xl font-bold text-navy mb-6">Weight Converter</h1>
-                <div class="flex gap-4 mb-4">
-                    <input type="number" id="w-val" class="w-1/2 p-3 border-2 border-gray-300 rounded-lg outline-none" placeholder="Amount">
-                    <select id="w-from" class="w-1/2 p-3 border-2 border-gray-300 rounded-lg outline-none">
-                        <option value="1">Kilograms (kg)</option>
-                        <option value="0.001">Grams (g)</option>
-                        <option value="0.453592">Pounds (lb)</option>
-                        <option value="0.0283495">Ounces (oz)</option>
-                    </select>
-                </div>
-                <p class="font-bold text-gray-500 mb-4">To</p>
-                <select id="w-to" class="w-full p-3 border-2 border-gray-300 rounded-lg outline-none mb-6">
-                    <option value="0.453592">Pounds (lb)</option>
-                    <option value="1">Kilograms (kg)</option>
-                    <option value="0.001">Grams (g)</option>
-                    <option value="0.0283495">Ounces (oz)</option>
-                </select>
-                <button id="calc-weight" class="w-full bg-navy hover:bg-blue-900 text-white font-bold py-3 rounded-lg shadow mb-4">Convert</button>
-                <div id="w-res" class="text-3xl font-black text-indigo-600 hidden mt-4"></div>
-            </div>
-        `,
-        init: function() {
-            document.getElementById('calc-weight').addEventListener('click', () => {
-                const val = parseFloat(document.getElementById('w-val').value);
-                const from = parseFloat(document.getElementById('w-from').value);
-                const to = parseFloat(document.getElementById('w-to').value);
-                if(!val) return;
-                const result = (val * from) / to;
-                document.getElementById('w-res').innerText = result.toFixed(4);
-                document.getElementById('w-res').classList.remove('hidden');
             });
         }
     },
@@ -408,7 +405,6 @@ window.onload = loadTool;
         html: `
             <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-orange-500 max-w-lg mx-auto">
                 <h1 class="text-3xl font-bold text-navy mb-6 text-center">Percentage Calculator</h1>
-                
                 <div class="bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200">
                     <p class="font-bold text-gray-700 mb-2">1. අගයක ප්‍රතිශතයක් සෙවීම:</p>
                     <div class="flex items-center gap-2">
@@ -419,7 +415,6 @@ window.onload = loadTool;
                         <span id="res-p1" class="font-black text-xl text-navy ml-2">--</span>
                     </div>
                 </div>
-
                 <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                     <p class="font-bold text-gray-700 mb-2">2. අගයක් තවත් අගයකින් කොපමණ % ද?:</p>
                     <div class="flex items-center gap-2">
@@ -446,29 +441,32 @@ window.onload = loadTool;
         }
     },
 
-    'url-encoder': {
-        title: "URL Encoder / Decoder | Pahasu.lk",
+    // ==========================================
+    // 6. TEXT & CONTENT TOOLS
+    // ==========================================
+
+    'lorem-generator': {
+        title: "Lorem Ipsum Generator | Pahasu.lk",
         html: `
-            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-purple-500">
-                <h1 class="text-3xl font-bold text-navy mb-4 text-center">URL Encoder & Decoder</h1>
-                <textarea id="url-input" rows="4" class="w-full p-4 border-2 border-gray-300 rounded-lg outline-none mb-4" placeholder="Enter URL or text here..."></textarea>
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <button id="btn-url-enc" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded shadow">Encode URL</button>
-                    <button id="btn-url-dec" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 rounded shadow">Decode URL</button>
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-navy max-w-2xl mx-auto text-center">
+                <h1 class="text-3xl font-bold text-navy mb-4">Lorem Ipsum Generator</h1>
+                <div class="flex items-center justify-center gap-4 mb-6">
+                    <label class="font-bold text-gray-700">Paragraphs:</label>
+                    <input type="number" id="lorem-count" value="3" min="1" max="10" class="w-20 p-2 border-2 border-gray-300 rounded text-center">
+                    <button id="gen-lorem" class="bg-navy hover:bg-blue-900 text-white font-bold py-2 px-6 rounded shadow">Generate</button>
                 </div>
-                <textarea id="url-output" rows="4" class="w-full p-4 bg-gray-100 border-2 border-gray-300 rounded-lg outline-none" readonly placeholder="Result will appear here..."></textarea>
+                <textarea id="lorem-out" rows="8" class="w-full p-4 bg-gray-50 border-2 border-gray-300 rounded-lg outline-none mb-4" readonly></textarea>
             </div>
         `,
         init: function() {
-            const input = document.getElementById('url-input');
-            const output = document.getElementById('url-output');
-            document.getElementById('btn-url-enc').addEventListener('click', () => {
-                output.value = encodeURIComponent(input.value);
+            const loremText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            document.getElementById('gen-lorem').addEventListener('click', () => {
+                const count = parseInt(document.getElementById('lorem-count').value);
+                let result = [];
+                for(let i=0; i<count; i++) result.push(loremText);
+                document.getElementById('lorem-out').value = result.join('\n\n');
             });
-            document.getElementById('btn-url-dec').addEventListener('click', () => {
-                try { output.value = decodeURIComponent(input.value); } 
-                catch(e) { alert("Invalid URL encoded string!"); }
-            });
+            document.getElementById('gen-lorem').click();
         }
     },
 
@@ -490,9 +488,9 @@ window.onload = loadTool;
             const output = document.getElementById('slug-output');
             input.addEventListener('input', () => {
                 output.value = input.value.toLowerCase().trim()
-                    .replace(/[^\w\s-]/g, '') // Remove non-word chars
-                    .replace(/[\s_-]+/g, '-') // Swap spaces for hyphens
-                    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/[\s_-]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
             });
             document.getElementById('slug-copy').addEventListener('click', () => {
                 output.select(); document.execCommand('copy'); alert('Slug Copied!');
@@ -500,48 +498,121 @@ window.onload = loadTool;
         }
     },
 
-    'social-counter': {
-        title: "Social Media Character Counter | Pahasu.lk",
+    // ==========================================
+    // 7. PDF TOOLS
+    // ==========================================
+
+    'merge-pdf': {
+        title: "Merge PDF Files | Pahasu.lk",
         html: `
-            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-pink-500">
-                <h1 class="text-3xl font-bold text-navy mb-6 text-center">Social Media Character Checker</h1>
-                <div class="grid grid-cols-3 gap-4 mb-6 text-center">
-                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                        <div class="font-bold text-blue-600">Twitter (X)</div>
-                        <div class="text-2xl font-black mt-2" id="tw-count">0 / 280</div>
-                    </div>
-                    <div class="bg-pink-50 p-4 rounded-lg border border-pink-200">
-                        <div class="font-bold text-pink-600">Instagram</div>
-                        <div class="text-2xl font-black mt-2" id="ig-count">0 / 2200</div>
-                    </div>
-                    <div class="bg-blue-100 p-4 rounded-lg border border-blue-300">
-                        <div class="font-bold text-blue-800">Facebook</div>
-                        <div class="text-2xl font-black mt-2" id="fb-count">0 / 63K</div>
-                    </div>
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-red-600 max-w-2xl mx-auto text-center">
+                <h1 class="text-3xl font-bold text-navy mb-2">Merge PDF Files</h1>
+                <p class="text-gray-600 mb-6">PDF ෆයිල් කිහිපයක් එකම PDF ගොනුවක් බවට පත්කරන්න.</p>
+                <div class="border-4 border-dashed border-gray-300 rounded-xl p-8 mb-6 bg-gray-50">
+                    <input type="file" id="pdf-upload" multiple accept=".pdf" class="hidden">
+                    <label for="pdf-upload" class="cursor-pointer bg-navy hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg shadow">Select PDF Files</label>
+                    <p class="text-sm text-gray-500 mt-4" id="file-count">කිසිදු ගොනුවක් තෝරා නැත</p>
                 </div>
-                <textarea id="social-text" rows="6" class="w-full p-4 border-2 border-gray-300 rounded-lg outline-none" placeholder="Type your post here..."></textarea>
+                <button id="btn-merge" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg shadow mb-4 hidden">Merge PDFs Now</button>
+                <div id="merge-result" class="hidden p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <p class="text-green-700 font-bold mb-2">සාර්ථකයි! ඔබගේ නව PDF ගොනුව සූදානම්.</p>
+                    <a id="download-merged" href="#" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow">Download Merged PDF</a>
+                </div>
             </div>
         `,
         init: function() {
-            const txt = document.getElementById('social-text');
-            txt.addEventListener('input', () => {
-                const len = txt.value.length;
-                
-                const tw = document.getElementById('tw-count');
-                tw.innerText = len + " / 280";
-                tw.className = len > 280 ? "text-2xl font-black mt-2 text-red-500" : "text-2xl font-black mt-2 text-navy";
-
-                const ig = document.getElementById('ig-count');
-                ig.innerText = len + " / 2200";
-                ig.className = len > 2200 ? "text-2xl font-black mt-2 text-red-500" : "text-2xl font-black mt-2 text-navy";
-                
-                document.getElementById('fb-count').innerText = len + " / 63K";
+            let selectedFiles = [];
+            document.getElementById('pdf-upload').addEventListener('change', (e) => {
+                selectedFiles = Array.from(e.target.files);
+                if (selectedFiles.length > 0) {
+                    document.getElementById('file-count').innerText = \`ගොනු \${selectedFiles.length} ක් තෝරාගෙන ඇත\`;
+                    document.getElementById('btn-merge').classList.remove('hidden');
+                    document.getElementById('merge-result').classList.add('hidden');
+                }
+            });
+            document.getElementById('btn-merge').addEventListener('click', async () => {
+                if(selectedFiles.length < 2) return alert("අවම වශයෙන් PDF ගොනු 2ක් වත් තෝරන්න!");
+                const btn = document.getElementById('btn-merge');
+                btn.innerText = "Merging... Please wait"; btn.disabled = true;
+                try {
+                    const { PDFDocument } = window.PDFLib;
+                    const mergedPdf = await PDFDocument.create();
+                    for (const file of selectedFiles) {
+                        const arrayBuffer = await file.arrayBuffer();
+                        const pdf = await PDFDocument.load(arrayBuffer);
+                        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                        copiedPages.forEach((page) => mergedPdf.addPage(page));
+                    }
+                    const pdfBytes = await mergedPdf.save();
+                    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(blob);
+                    const downloadLink = document.getElementById('download-merged');
+                    downloadLink.href = url; downloadLink.download = "Pahasu_Merged.pdf";
+                    document.getElementById('merge-result').classList.remove('hidden');
+                    btn.innerText = "Merge PDFs Now"; btn.disabled = false;
+                } catch (error) {
+                    alert("Error merging PDFs.");
+                    btn.innerText = "Merge PDFs Now"; btn.disabled = false;
+                }
             });
         }
     },
-// ==========================================
-    // 8.1 ADVANCED PDF TOOLS
-    // ==========================================
+
+    'images-to-pdf': {
+        title: "Images to PDF Converter | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-red-600 max-w-2xl mx-auto text-center">
+                <h1 class="text-3xl font-bold text-navy mb-2">Images to PDF</h1>
+                <p class="text-gray-600 mb-6">JPG, PNG පින්තූර කිහිපයක් එකතු කර උසස් තත්වයේ PDF එකක් සාදාගන්න.</p>
+                <div class="border-4 border-dashed border-gray-300 rounded-xl p-8 mb-6 bg-gray-50">
+                    <input type="file" id="img-upload" multiple accept="image/png, image/jpeg" class="hidden">
+                    <label for="img-upload" class="cursor-pointer bg-navy hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg shadow">Select Images</label>
+                    <p class="text-sm text-gray-500 mt-4" id="img-count">කිසිදු පින්තූරයක් තෝරා නැත</p>
+                </div>
+                <button id="btn-img-pdf" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg shadow mb-4 hidden">Convert to PDF</button>
+                <div id="img-pdf-result" class="hidden p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <p class="text-green-700 font-bold mb-2">සාර්ථකයි! ඔබගේ PDF ගොනුව සූදානම්.</p>
+                    <a id="download-img-pdf" href="#" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow">Download PDF</a>
+                </div>
+            </div>
+        `,
+        init: function() {
+            let selectedImages = [];
+            document.getElementById('img-upload').addEventListener('change', (e) => {
+                selectedImages = Array.from(e.target.files);
+                if (selectedImages.length > 0) {
+                    document.getElementById('img-count').innerText = \`පින්තූර \${selectedImages.length} ක් තෝරාගෙන ඇත\`;
+                    document.getElementById('btn-img-pdf').classList.remove('hidden');
+                    document.getElementById('img-pdf-result').classList.add('hidden');
+                }
+            });
+            document.getElementById('btn-img-pdf').addEventListener('click', async () => {
+                if(selectedImages.length === 0) return alert("පින්තූර තෝරන්න!");
+                const btn = document.getElementById('btn-img-pdf');
+                btn.innerText = "Converting... Please wait"; btn.disabled = true;
+                try {
+                    const { PDFDocument } = window.PDFLib;
+                    const pdfDoc = await PDFDocument.create();
+                    for (const file of selectedImages) {
+                        const arrayBuffer = await file.arrayBuffer();
+                        let img = (file.type === 'image/jpeg') ? await pdfDoc.embedJpg(arrayBuffer) : await pdfDoc.embedPng(arrayBuffer);
+                        const page = pdfDoc.addPage([img.width, img.height]);
+                        page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+                    }
+                    const pdfBytes = await pdfDoc.save();
+                    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(blob);
+                    const downloadLink = document.getElementById('download-img-pdf');
+                    downloadLink.href = url; downloadLink.download = "Pahasu_Images.pdf";
+                    document.getElementById('img-pdf-result').classList.remove('hidden');
+                    btn.innerText = "Convert to PDF"; btn.disabled = false;
+                } catch (error) {
+                    alert("Error creating PDF.");
+                    btn.innerText = "Convert to PDF"; btn.disabled = false;
+                }
+            });
+        }
+    },
 
     'split-pdf': {
         title: "Split PDF Files | Pahasu.lk",
@@ -549,15 +620,11 @@ window.onload = loadTool;
             <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-red-600 max-w-2xl mx-auto text-center">
                 <h1 class="text-3xl font-bold text-navy mb-2">Split PDF</h1>
                 <p class="text-gray-600 mb-6">විශාල PDF ගොනුවකින් ඔබට අවශ්‍ය පිටු (Pages) පමණක් වෙන්කර ලබාගන්න.</p>
-                
                 <div class="border-4 border-dashed border-gray-300 rounded-xl p-8 mb-6 bg-gray-50">
                     <input type="file" id="split-upload" accept=".pdf" class="hidden">
-                    <label for="split-upload" class="cursor-pointer bg-navy hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg shadow">
-                        Select PDF File
-                    </label>
+                    <label for="split-upload" class="cursor-pointer bg-navy hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg shadow">Select PDF File</label>
                     <p class="text-sm text-gray-500 mt-4" id="split-file-name">කිසිදු ගොනුවක් තෝරා නැත</p>
                 </div>
-
                 <div id="split-options" class="hidden mb-6 text-left bg-blue-50 p-4 rounded-lg border border-blue-200">
                     <p class="font-bold text-navy mb-2">ඔබට අවශ්‍ය පිටු සීමාව ලබා දෙන්න:</p>
                     <div class="flex items-center gap-4">
@@ -572,9 +639,7 @@ window.onload = loadTool;
                     </div>
                     <p class="text-xs text-red-500 mt-2 font-bold" id="total-pages-info"></p>
                 </div>
-
                 <button id="btn-split" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg shadow mb-4 hidden">Extract Pages</button>
-                
                 <div id="split-result" class="hidden p-4 bg-green-50 border border-green-200 rounded-lg">
                     <p class="text-green-700 font-bold mb-2">සාර්ථකයි! ඔබගේ නව PDF ගොනුව සූදානම්.</p>
                     <a id="download-split" href="#" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow">Download Extracted PDF</a>
@@ -582,69 +647,47 @@ window.onload = loadTool;
             </div>
         `,
         init: function() {
-            let selectedFile = null;
-            let totalPages = 0;
-
+            let selectedFile = null; let totalPages = 0;
             document.getElementById('split-upload').addEventListener('change', async (e) => {
                 selectedFile = e.target.files[0];
                 if (selectedFile) {
                     document.getElementById('split-file-name').innerText = selectedFile.name;
-                    
-                    // Load PDF to get total pages
                     const arrayBuffer = await selectedFile.arrayBuffer();
                     const { PDFDocument } = window.PDFLib;
                     const pdf = await PDFDocument.load(arrayBuffer);
                     totalPages = pdf.getPageCount();
-
                     document.getElementById('page-end').value = totalPages;
                     document.getElementById('total-pages-info').innerText = \`මෙම ගොනුවේ මුළු පිටු ගණන: \${totalPages}\`;
-                    
                     document.getElementById('split-options').classList.remove('hidden');
                     document.getElementById('btn-split').classList.remove('hidden');
                     document.getElementById('split-result').classList.add('hidden');
                 }
             });
-
             document.getElementById('btn-split').addEventListener('click', async () => {
                 const start = parseInt(document.getElementById('page-start').value);
                 const end = parseInt(document.getElementById('page-end').value);
-                
-                if(start < 1 || end > totalPages || start > end) {
-                    return alert("කරුණාකර නිවැරදි පිටු සීමාවක් ලබා දෙන්න!");
-                }
-
+                if(start < 1 || end > totalPages || start > end) return alert("නිවැරදි පිටු සීමාවක් ලබා දෙන්න!");
                 const btn = document.getElementById('btn-split');
-                btn.innerText = "Extracting... Please wait";
-                btn.disabled = true;
-
+                btn.innerText = "Extracting... Please wait"; btn.disabled = true;
                 try {
                     const arrayBuffer = await selectedFile.arrayBuffer();
                     const { PDFDocument } = window.PDFLib;
                     const originalPdf = await PDFDocument.load(arrayBuffer);
                     const newPdf = await PDFDocument.create();
-
-                    // Pages are 0-indexed in pdf-lib
                     const pagesToExtract = [];
                     for(let i = start - 1; i <= end - 1; i++) { pagesToExtract.push(i); }
-
                     const copiedPages = await newPdf.copyPages(originalPdf, pagesToExtract);
                     copiedPages.forEach((page) => newPdf.addPage(page));
-
                     const pdfBytes = await newPdf.save();
                     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
                     const url = URL.createObjectURL(blob);
-
                     const downloadLink = document.getElementById('download-split');
-                    downloadLink.href = url;
-                    downloadLink.download = \`Pahasu_Split_Pages_\${start}-\${end}.pdf\`;
-                    
+                    downloadLink.href = url; downloadLink.download = \`Pahasu_Split_\${start}-\${end}.pdf\`;
                     document.getElementById('split-result').classList.remove('hidden');
-                    btn.innerText = "Extract Pages";
-                    btn.disabled = false;
+                    btn.innerText = "Extract Pages"; btn.disabled = false;
                 } catch (error) {
                     alert("Error splitting PDF.");
-                    btn.innerText = "Extract Pages";
-                    btn.disabled = false;
+                    btn.innerText = "Extract Pages"; btn.disabled = false;
                 }
             });
         }
@@ -657,21 +700,17 @@ window.onload = loadTool;
                 <div class="absolute top-4 right-[-35px] bg-gold text-navy font-bold py-1 px-10 transform rotate-45 text-sm shadow-md">PRO</div>
                 <h1 class="text-3xl font-bold text-navy mb-2">PDF Compressor</h1>
                 <p class="text-gray-600 mb-6">ඊමේල් හරහා යැවීමට පහසු වන පරිදි PDF ගොනු වල සයිස් එක අඩු කරන්න.</p>
-                
                 <div class="border-4 border-dashed border-gray-300 rounded-xl p-8 mb-6 bg-gray-50 opacity-70">
-                    <button class="bg-gray-400 text-white font-bold py-3 px-6 rounded-lg shadow cursor-not-allowed">
-                        Select PDF File
-                    </button>
+                    <button class="bg-gray-400 text-white font-bold py-3 px-6 rounded-lg shadow cursor-not-allowed">Select PDF File</button>
                     <p class="text-sm text-gray-500 mt-4">Max file size: 50MB</p>
                 </div>
-                
                 <div class="bg-yellow-50 border border-gold p-4 rounded-lg">
                     <h3 class="font-bold text-navy text-lg mb-2">⚠️ Server Upgrade Required</h3>
                     <p class="text-sm text-gray-700">මෙම මෙවලම සඳහා Cloud Server Processing අවශ්‍ය වේ. මෙම පහසුකම ළඟදීම අපගේ PRO පරිශීලකයින් සඳහා විවෘත වනු ඇත!</p>
                 </div>
             </div>
         `,
-        init: function() { /* UI Only */ }
+        init: function() { }
     },
 
     'pdf-to-word': {
@@ -681,19 +720,38 @@ window.onload = loadTool;
                 <div class="absolute top-4 right-[-35px] bg-gold text-navy font-bold py-1 px-10 transform rotate-45 text-sm shadow-md">PRO</div>
                 <h1 class="text-3xl font-bold text-blue-600 mb-2">PDF to Word</h1>
                 <p class="text-gray-600 mb-6">PDF ලියවිලි නැවත එඩිට් කළ හැකි Microsoft Word (.docx) ෆෝමැට් එකට හරවන්න.</p>
-                
                 <div class="border-4 border-dashed border-gray-300 rounded-xl p-8 mb-6 bg-gray-50 opacity-70">
-                    <button class="bg-gray-400 text-white font-bold py-3 px-6 rounded-lg shadow cursor-not-allowed">
-                        Select PDF File
-                    </button>
+                    <button class="bg-gray-400 text-white font-bold py-3 px-6 rounded-lg shadow cursor-not-allowed">Select PDF File</button>
                     <p class="text-sm text-gray-500 mt-4">OCR (Text Recognition) Supported</p>
                 </div>
-                
                 <div class="bg-yellow-50 border border-gold p-4 rounded-lg">
                     <h3 class="font-bold text-navy text-lg mb-2">⚠️ PRO Feature Coming Soon</h3>
                     <p class="text-sm text-gray-700">මෙය Advanced AI තාක්ෂණය භාවිතා කරන මෙවලමකි. ළඟදීම Pahasu PRO හරහා ඔබට මෙය භාවිතා කළ හැක.</p>
                 </div>
             </div>
         `,
-        init: function() { /* UI Only */ }
-    },
+        init: function() { }
+    }
+
+}; // <-- මෙතනින් තමයි toolsRegistry කියන එක ඉවර වෙන්නේ (Object එක Close වෙනවා)
+
+// ==========================================
+// MASTER LOADER LOGIC
+// ==========================================
+function loadTool() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const appName = urlParams.get('app'); 
+    const container = document.getElementById('app-container');
+
+    if (appName && toolsRegistry[appName]) {
+        const tool = toolsRegistry[appName];
+        document.title = tool.title;
+        container.innerHTML = tool.html;
+        if (tool.init) tool.init();
+    } else {
+        container.innerHTML = `<div class="text-center py-20"><h1 class="text-5xl text-red-500 font-bold mb-4">404</h1><h2 class="text-2xl text-gray-700 font-bold">Tool Development in Progress...</h2><p class="mt-4 text-gray-500">මෙම මෙවලම ඉක්මනින්ම එකතු වනු ඇත.</p></div>`;
+    }
+}
+
+// Window එක load වෙද්දි function එක call කරනවා
+window.onload = loadTool;
