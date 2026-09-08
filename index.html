@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pahasu.lk - The Ultimate Digital Toolkit</title>
+    
+    <!-- 🛠️ Auto-Generated Favicon (No extra image files needed!) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { theme: { extend: { colors: { navy: '#0f172a', gold: '#fbbf24', danger: '#ef4444' } } } }
@@ -59,23 +63,23 @@
         <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">වෙබ්, ග්‍රැෆික්, සෞඛ්‍ය සහ ඔෆිස් වැඩ පහසු කරන නොමිලේ සහ ප්‍රිමියම් මෙවලම්.</p>
         
         <div class="max-w-xl mx-auto relative">
-            <input type="text" id="search-box" placeholder="මෙවලමක් සොයන්න... (e.g. BMI, Invoice, Converter)" class="w-full p-4 pl-12 rounded-full border-2 border-gray-300 focus:border-navy outline-none shadow-sm text-lg">
+            <input type="text" id="search-box" placeholder="මෙවලමක් සොයන්න... (e.g. BMI, PDF, Converter)" class="w-full p-4 pl-12 rounded-full border-2 border-gray-300 focus:border-navy outline-none shadow-sm text-lg">
             <svg class="w-6 h-6 absolute left-4 top-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </div>
     </div>
 
-    <!-- Filtering Buttons (Scrollable on Mobile) -->
+    <!-- Filtering Buttons (Clean Design & Scrollable) -->
     <div class="max-w-6xl mx-auto px-4 mb-8">
         <div class="flex overflow-x-auto gap-3 pb-2 no-scrollbar justify-start md:justify-center" id="filter-buttons">
-            <button class="filter-btn shrink-0 bg-navy text-white px-5 py-2 rounded-full font-bold text-sm shadow transition" data-filter="all">All Tools</button>
-            <button class="filter-btn shrink-0 bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-full font-bold text-sm transition" data-filter="pro">👑 PRO</button>
-            <button class="filter-btn shrink-0 bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-full font-bold text-sm transition" data-filter="health">❤️ Health & Fitness</button>
-            <button class="filter-btn shrink-0 bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-full font-bold text-sm transition" data-filter="business">💼 Finance & Business</button>
-            <button class="filter-btn shrink-0 bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-full font-bold text-sm transition" data-filter="dev">👨‍💻 Developer & Code</button>
-            <button class="filter-btn shrink-0 bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-full font-bold text-sm transition" data-filter="unit">📐 Unit Converters</button>
-            <button class="filter-btn shrink-0 bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-full font-bold text-sm transition" data-filter="social">📱 Social Media</button>
-            <button class="filter-btn shrink-0 bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-full font-bold text-sm transition" data-filter="text">📝 Text & Content</button>
-            <button class="filter-btn shrink-0 bg-gray-200 text-gray-700 hover:bg-gray-300 px-5 py-2 rounded-full font-bold text-sm transition" data-filter="image">🖼️ Media</button>
+            <button class="filter-btn shrink-0 bg-navy text-white border-navy px-5 py-2 rounded-full font-bold text-sm shadow transition border" data-filter="all">All Tools</button>
+            <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="pro">👑 PRO</button>
+            <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="health">❤️ Health & Fitness</button>
+            <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="business">💼 Finance & Business</button>
+            <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="dev">👨‍💻 Developer & Code</button>
+            <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="unit">📐 Unit Converters</button>
+            <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="social">📱 Social Media</button>
+            <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="image">🖼️ Media & PDF</button>
+            <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="text">📝 Text & Content</button>
         </div>
     </div>
 
@@ -84,179 +88,171 @@
         
         <!-- ================= HEALTH & FITNESS ================= -->
         <a href="tool.html?app=bmi-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-red-400 hover:shadow-xl transition" data-category="health" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">BMI Calculator</h2>
             <p class="text-gray-500 text-xs">ඔබගේ උසට සරිලන බරක් තිබේදැයි (ශරීර ස්කන්ධ දර්ශකය) ගණනය කරන්න.</p>
         </a>
-
         <a href="tool.html?app=calorie-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-red-400 hover:shadow-xl transition" data-category="health" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Calorie Calculator</h2>
             <p class="text-gray-500 text-xs">ඔබ දිනපතා ලබාගත යුතු නිවැරදි කැලරි ප්‍රමාණය (BMR) සොයාගන්න.</p>
         </a>
-
         <a href="tool.html?app=water-intake" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-red-400 hover:shadow-xl transition" data-category="health" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Water Intake Calculator</h2>
             <p class="text-gray-500 text-xs">ශරීරයේ බර අනුව දිනකට පානය කළ යුතු අවම ජලය ප්‍රමාණය ගණනය කරන්න.</p>
         </a>
         <a href="tool.html?app=pregnancy-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-red-400 hover:shadow-xl transition" data-category="health" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Due Date Calculator</h2>
             <p class="text-gray-500 text-xs">දරුවා ලැබීමට නියමිත ආසන්න දිනය (Pregnancy Due Date) ගණනය කරන්න.</p>
         </a>
 
         <!-- ================= BUSINESS & FINANCE ================= -->
         <a href="tool.html?app=loan-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-green-500 hover:shadow-xl transition" data-category="business" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Loan Calculator</h2>
             <p class="text-gray-500 text-xs">බැංකු ණය සඳහා මාසිකව ගෙවිය යුතු වාරිකය සහ පොලිය ගණනය කරන්න.</p>
         </a>
-
         <a href="tool.html?app=discount-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-green-500 hover:shadow-xl transition" data-category="business" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Discount Calculator</h2>
             <p class="text-gray-500 text-xs">වට්ටම් ප්‍රතිශත අඩු කළ පසු භාණ්ඩයේ නිවැරදි අවසාන මිල ගණනය කරන්න.</p>
         </a>
-
+        <a href="tool.html?app=percentage-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-green-500 hover:shadow-xl transition" data-category="business" data-tier="free">
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">Percentage Calculator</h2>
+            <p class="text-gray-500 text-xs">ප්‍රතිශත (%) වැඩිවීම් සහ අඩුවීම් ගණිතමය ලෙස පහසුවෙන් විසඳා ගන්න.</p>
+        </a>
         <a href="tool.html?app=qr-generator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-green-500 hover:shadow-xl transition" data-category="business" data-tier="free">
             <span class="bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">PRO FEATURES</span>
             <h2 class="text-lg font-bold text-navy mb-1">QR Code Generator</h2>
             <p class="text-gray-500 text-xs">වර්ණ සහ ලාංඡන සහිතව ඔබගේ ව්‍යාපාරයට QR කේතයක් සාදන්න.</p>
         </a>
-
         <a href="invoice.html" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-gold relative hover:shadow-xl transition" data-category="business" data-tier="pro">
             <div class="absolute top-0 right-0 bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded-bl-lg">PRO</div>
             <h2 class="text-lg font-bold text-navy mb-1 mt-3">Pro Invoice Maker</h2>
             <p class="text-gray-500 text-xs">ව්‍යාපාරයේ Logo එක සහිතව Professional Invoices හදන්න.</p>
         </a>
-
         <a href="legal.html" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-gold relative hover:shadow-xl transition" data-category="business" data-tier="pro">
             <div class="absolute top-0 right-0 bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded-bl-lg">PRO</div>
             <h2 class="text-lg font-bold text-navy mb-1 mt-3">Legal Draft Generator</h2>
             <p class="text-gray-500 text-xs">නිවාස/වාහන කුලී ගිවිසුම් නීත්‍යානුකූලව ස්වයංක්‍රීයව සාදාගන්න.</p>
         </a>
 
-        <!-- ================= PDF & DOCUMENT TOOLS ================= -->
+        <!-- ================= MEDIA & PDF TOOLS ================= -->
+        <a href="tool.html?app=merge-pdf" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-red-600 hover:shadow-xl transition" data-category="image" data-tier="free">
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">Merge PDF Files</h2>
+            <p class="text-gray-500 text-xs">වෙන වෙනම ඇති PDF ෆයිල් කිහිපයක් එකතු කර එකම PDF ගොනුවක් සෑදීමට.</p>
+        </a>
+        <a href="tool.html?app=images-to-pdf" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-red-600 hover:shadow-xl transition" data-category="image" data-tier="free">
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">Images to PDF</h2>
+            <p class="text-gray-500 text-xs">JPG හෝ PNG පින්තූර කිහිපයක් එකතු කර උසස් තත්වයේ PDF එකක් නිර්මාණය කරන්න.</p>
+        </a>
         <a href="tool.html?app=split-pdf" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-red-600 hover:shadow-xl transition" data-category="image" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Split PDF</h2>
             <p class="text-gray-500 text-xs">විශාල PDF ගොනුවකින් ඔබට අවශ්‍ය පිටු (Pages) පමණක් වෙන් කර ලබාගන්න.</p>
         </a>
-
         <a href="tool.html?app=pdf-compressor" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-gold hover:shadow-xl transition relative overflow-hidden" data-category="image" data-tier="pro">
             <div class="absolute top-0 right-0 bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded-bl-lg">PRO</div>
             <h2 class="text-lg font-bold text-navy mb-1 mt-3">PDF Compressor</h2>
             <p class="text-gray-500 text-xs">ඊමේල් හරහා යැවීමට පහසු වන පරිදි PDF ගොනු වල සයිස් එක අඩු කරන්න.</p>
         </a>
-
-        <a href="tool.html?app=pdf-to-word" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-gold hover:shadow-xl transition relative overflow-hidden" data-category="text" data-tier="pro">
-            <div class="absolute top-0 right-0 bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded-bl-lg">PRO</div>
-            <h2 class="text-lg font-bold text-blue-600 mb-1 mt-3">PDF to Word</h2>
-            <p class="text-gray-500 text-xs">PDF ලියවිලි නැවත එඩිට් කළ හැකි Word (.docx) ෆෝමැට් එකට හැරවීමට.</p>
+        <a href="image-tools.html" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-teal-500 hover:shadow-xl transition" data-category="image" data-tier="free">
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">Image Compressor & WebP</h2>
+            <p class="text-gray-500 text-xs">පින්තූර වල ගුණාත්මකබව නොනසා Size එක අඩු කරගන්න.</p>
         </a>
-        
 
         <!-- ================= DEVELOPER & CODE ================= -->
         <a href="tool.html?app=json-beautifier" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-purple-500 hover:shadow-xl transition" data-category="dev" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">JSON Beautifier</h2>
             <p class="text-gray-500 text-xs">අවුල් සහගත JSON කෝඩ් එකක් Format කර දෝෂ පරීක්ෂා කරන්න.</p>
         </a>
-
         <a href="tool.html?app=base64-converter" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-purple-500 hover:shadow-xl transition" data-category="dev" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Base64 Encoder / Decoder</h2>
             <p class="text-gray-500 text-xs">පෙළ හෝ දත්ත Base64 කෝඩ් බවට ක්ෂණිකව පරිවර්තනය කරන්න.</p>
         </a>
         <a href="tool.html?app=url-encoder" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-purple-500 hover:shadow-xl transition" data-category="dev" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">URL Encoder & Decoder</h2>
             <p class="text-gray-500 text-xs">URL ලින්ක් වල ඇති විශේෂ අකුරු වෙබ් පරිශීලනයට ගැළපෙන ලෙස සකසන්න.</p>
         </a>
 
         <!-- ================= UNIT CONVERTERS ================= -->
         <a href="tool.html?app=length-converter" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-indigo-400 hover:shadow-xl transition" data-category="unit" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Length Converter</h2>
             <p class="text-gray-500 text-xs">මීටර්, කිලෝමීටර්, අඩි සහ අඟල් එකිනෙකට පහසුවෙන් හරවා ගන්න.</p>
         </a>
-
         <a href="tool.html?app=temp-converter" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-indigo-400 hover:shadow-xl transition" data-category="unit" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Temperature Converter</h2>
             <p class="text-gray-500 text-xs">සෙල්සියස් (°C) සහ ෆැරන්හයිට් (°F) උෂ්ණත්ව අගයන් මාරු කරන්න.</p>
         </a>
         <a href="tool.html?app=weight-converter" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-indigo-400 hover:shadow-xl transition" data-category="unit" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Weight Converter</h2>
             <p class="text-gray-500 text-xs">ග්‍රෑම්, කිලෝග්‍රෑම්, රාත්තල් (Pounds) සහ අවුන්ස අතර අගයන් මාරු කරන්න.</p>
-        </a>
-        <a href="tool.html?app=percentage-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-orange-500 hover:shadow-xl transition" data-category="business" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
-            <h2 class="text-lg font-bold text-navy mb-1">Percentage Calculator</h2>
-            <p class="text-gray-500 text-xs">ප්‍රතිශත (%) වැඩිවීම් සහ අඩුවීම් ගණිතමය ලෙස පහසුවෙන් විසඳා ගන්න.</p>
         </a>
 
         <!-- ================= SOCIAL MEDIA ================= -->
         <a href="tool.html?app=hashtag-generator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-pink-500 hover:shadow-xl transition" data-category="social" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Hashtag Generator</h2>
             <p class="text-gray-500 text-xs">ඔබේ පෝස්ට් එකේ මාතෘකාව දීලා ඊට ගැළපෙන ජනප්‍රිය hashtags ලබාගන්න.</p>
         </a>
         <a href="tool.html?app=social-counter" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-pink-500 hover:shadow-xl transition" data-category="social" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Social Limits Checker</h2>
             <p class="text-gray-500 text-xs">ඔබගේ Post එක Facebook, Instagram වල අකුරු සීමාව ඉක්මවා ඇත්දැයි බලන්න.</p>
         </a>
 
         <!-- ================= TEXT & CONTENT ================= -->
+        <a href="tool.html?app=pdf-to-word" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-gold hover:shadow-xl transition relative overflow-hidden" data-category="text" data-tier="pro">
+            <div class="absolute top-0 right-0 bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded-bl-lg">PRO</div>
+            <h2 class="text-lg font-bold text-blue-600 mb-1 mt-3">PDF to Word</h2>
+            <p class="text-gray-500 text-xs">PDF ලියවිලි නැවත එඩිට් කළ හැකි Word (.docx) ෆෝමැට් එකට හැරවීමට.</p>
+        </a>
         <a href="tool.html?app=case-converter" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-blue-500 hover:shadow-xl transition" data-category="text" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Case Converter</h2>
             <p class="text-gray-500 text-xs">ඉංග්‍රීසි අකුරු අවශ්‍ය පරිදි UPPERCASE, lowercase වෙත ක්ෂණිකව මාරු කරන්න.</p>
         </a>
-
         <a href="tool.html?app=lorem-generator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-blue-500 hover:shadow-xl transition" data-category="text" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Lorem Ipsum Generator</h2>
             <p class="text-gray-500 text-xs">වෙබ් ඩිසයින් සඳහා අවශ්‍ය වන තාවකාලික ආදර්ශ පෙළ (Dummy text) ලබාගන්න.</p>
         </a>
-
         <a href="tool.html?app=word-counter" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-blue-500 hover:shadow-xl transition" data-category="text" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Word & Character Count</h2>
             <p class="text-gray-500 text-xs">ලිපියක ඇති වචන ගණන සහ කියවීමට ගතවන කාලය පරීක්ෂා කරන්න.</p>
         </a>
-
         <a href="tool.html?app=password-generator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-blue-500 hover:shadow-xl transition" data-category="text" data-tier="free">
             <span class="bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">PRO FEATURES</span>
             <h2 class="text-lg font-bold text-navy mb-1">Secure Pass Generator</h2>
             <p class="text-gray-500 text-xs">හැක් කිරීමට නොහැකි ශක්තිමත් මුරපද (Passwords) තොග වශයෙන් සාදාගන්න.</p>
         </a>
-
         <a href="tool.html?app=age-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-blue-500 hover:shadow-xl transition" data-category="text" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Age Calculator</h2>
             <p class="text-gray-500 text-xs">අද දිනයට ඔබගේ නිවැරදිම වයස (අවුරුදු/මාස/දින) ගණනය කරන්න.</p>
         </a>
-
         <a href="unicode.html" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-blue-500 hover:shadow-xl transition" data-category="text" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">Sinhala Unicode 🔄 FM</h2>
             <p class="text-gray-500 text-xs">අන්තර්ජාලයේ ඇති යුනිකෝඩ් අකුරු FM Abhaya බවට හරවන්න.</p>
         </a>
         <a href="tool.html?app=slug-generator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-blue-500 hover:shadow-xl transition" data-category="text" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
             <h2 class="text-lg font-bold text-navy mb-1">SEO Slug Generator</h2>
             <p class="text-gray-500 text-xs">බ්ලොග් පෝස්ට් වල මාතෘකා URL එකකට ගැළපෙන පරිදි (Hyphens) සකස් කරන්න.</p>
-        </a>
-
-        <!-- ================= IMAGE & MEDIA ================= -->
-        <a href="image-tools.html" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-teal-500 hover:shadow-xl transition" data-category="image" data-tier="free">
-            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
-            <h2 class="text-lg font-bold text-navy mb-1">Image Compressor & WebP</h2>
-            <p class="text-gray-500 text-xs">පින්තූර වල ගුණාත්මකබව නොනසා Size එක අඩු කරගන්න.</p>
         </a>
 
     </div>
@@ -264,62 +260,65 @@
     <!-- Scripts -->
     <script type="module" src="auth.js"></script>
     <script>
-        // Filter Logic
+        // Flawless Search & Filter Logic Setup
         const filterBtns = document.querySelectorAll('.filter-btn');
         const toolCards = document.querySelectorAll('.tool-card');
         const searchBox = document.getElementById('search-box');
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Style Active Button
-                filterBtns.forEach(b => {
-                    b.classList.remove('bg-navy', 'text-white');
-                    b.classList.add('bg-gray-200', 'text-gray-700');
-                });
-                btn.classList.remove('bg-gray-200', 'text-gray-700');
-                btn.classList.add('bg-navy', 'text-white');
+        let currentFilter = 'all';
+        let searchQuery = '';
 
-                const filterValue = btn.getAttribute('data-filter');
-
-                // Filter Cards
-                toolCards.forEach(card => {
-                    const category = card.getAttribute('data-category');
-                    const tier = card.getAttribute('data-tier');
-
-                    if (filterValue === 'all') {
-                        card.classList.remove('hidden-card');
-                    } else if (filterValue === 'pro' || filterValue === 'free') {
-                        if (tier === filterValue) card.classList.remove('hidden-card');
-                        else card.classList.add('hidden-card');
-                    } else {
-                        if (category === filterValue) card.classList.remove('hidden-card');
-                        else card.classList.add('hidden-card');
-                    }
-                });
-            });
-        });
-
-        // Search Logic
-        searchBox.addEventListener('input', (e) => {
-            const searchText = e.target.value.toLowerCase();
-            
-            // Reset active filter button styling when searching
-            filterBtns.forEach(b => {
-                b.classList.remove('bg-navy', 'text-white');
-                b.classList.add('bg-gray-200', 'text-gray-700');
-            });
-            document.querySelector('[data-filter="all"]').classList.remove('bg-gray-200', 'text-gray-700');
-            document.querySelector('[data-filter="all"]').classList.add('bg-navy', 'text-white');
-
+        // Main function that combines Category Filter AND Search
+        function applyFilters() {
             toolCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const tier = card.getAttribute('data-tier');
                 const title = card.querySelector('h2').innerText.toLowerCase();
                 const desc = card.querySelector('p').innerText.toLowerCase();
-                if (title.includes(searchText) || desc.includes(searchText)) {
+
+                // Check if card matches selected category/tier
+                let matchesFilter = false;
+                if (currentFilter === 'all') matchesFilter = true;
+                else if (currentFilter === 'pro' || currentFilter === 'free') matchesFilter = (tier === currentFilter);
+                else matchesFilter = (category === currentFilter);
+
+                // Check if card matches search text
+                let matchesSearch = true;
+                if (searchQuery !== '') {
+                    matchesSearch = title.includes(searchQuery) || desc.includes(searchQuery);
+                }
+
+                // Show only if BOTH match
+                if (matchesFilter && matchesSearch) {
                     card.classList.remove('hidden-card');
                 } else {
                     card.classList.add('hidden-card');
                 }
             });
+        }
+
+        // Handle Category Button Clicks
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active style from all
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-navy', 'text-white', 'border-navy');
+                    b.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
+                });
+                
+                // Add active style to clicked
+                btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
+                btn.classList.add('bg-navy', 'text-white', 'border-navy');
+
+                currentFilter = btn.getAttribute('data-filter');
+                applyFilters();
+            });
+        });
+
+        // Handle Search Input
+        searchBox.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase();
+            applyFilters();
         });
     </script>
 </body>
