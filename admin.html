@@ -15,12 +15,15 @@
         }
     </script>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800">
+<body class="bg-gray-100 font-sans text-gray-800" style="display: none;">
 
     <!-- Admin Navbar -->
     <nav class="bg-navy p-4 shadow-md flex justify-between items-center">
         <div class="text-white text-2xl font-bold">Pahasu <span class="text-gold">Admin</span></div>
-        <div class="text-white">Admin Logged In</div>
+        <div class="flex items-center gap-4">
+            <span class="text-white text-sm">Admin Logged In</span>
+            <button onclick="adminLogout()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded transition">Logout</button>
+        </div>
     </nav>
 
     <div class="max-w-6xl mx-auto mt-8 p-4">
@@ -39,7 +42,6 @@
                     </tr>
                 </thead>
                 <tbody id="user-table-body">
-                    <!-- Users ලා Firebase එකෙන් ඇවිත් මෙතන පිරෙනවා -->
                     <tr><td colspan="5" class="p-4 text-center text-gray-500">Loading Users...</td></tr>
                 </tbody>
             </table>
@@ -72,12 +74,11 @@
 
     <!-- Firebase SDK & Logic -->
     <script type="module">
-        // 1. Firebase Imports (v12.18.0)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
 
-        // 2. ඔබගේ Firebase Config එක
         const firebaseConfig = {
             apiKey: "AIzaSyCVvx29Bi_dK22QA9LvqmkQa47CDzlRSos",
             authDomain: "pahasu-lk.firebaseapp.com",
@@ -88,18 +89,52 @@
             measurementId: "G-574L3FNX2J"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
+        const auth = getAuth(app);
 
-        // 3. Database එකෙන් Users ලාව අරන් Table එකට දාන Function එක
+        // ==========================================
+        // SECURE ADMIN AUTH & ROLE VERIFICATION
+        // ==========================================
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.replace("admin-login.html");
+                return;
+            }
+
+            try {
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+
+                if (userSnap.exists() && userSnap.data().role === "admin") {
+                    // හැමදේම හරි නම් පේජ් එක පෙන්වනවා සහ යූසර්ස්ලා ලෝඩ් කරනවා
+                    document.body.style.display = "block";
+                    loadUsers();
+                } else {
+                    window.location.replace("admin-login.html");
+                }
+            } catch (error) {
+                console.error("Auth Error:", error);
+                window.location.replace("admin-login.html");
+            }
+        });
+
+        // Logout function for Admin
+        window.adminLogout = async function() {
+            await signOut(auth);
+            window.location.replace("admin-login.html");
+        }
+
+        // ==========================================
+        // LOAD USERS TO TABLE
+        // ==========================================
         async function loadUsers() {
             try {
                 const usersCol = collection(db, "users");
                 const userSnapshot = await getDocs(usersCol);
                 const tableBody = document.getElementById("user-table-body");
-                tableBody.innerHTML = ""; // Clear loading text
+                tableBody.innerHTML = ""; 
 
                 if (userSnapshot.empty) {
                     tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-500">තාම කිසිම User කෙනෙක් නෑ.</td></tr>`;
@@ -111,9 +146,14 @@
                     const userId = userDoc.id;
                     
                     const isPro = user.role === "pro";
-                    const statusBadge = isPro 
-                        ? `<span class="bg-gold text-navy text-xs font-bold px-2 py-1 rounded">PRO</span>` 
-                        : `<span class="bg-gray-300 text-gray-700 text-xs font-bold px-2 py-1 rounded">FREE</span>`;
+                    const isAdmin = user.role === "admin";
+                    
+                    let statusBadge = `<span class="bg-gray-300 text-gray-700 text-xs font-bold px-2 py-1 rounded">FREE</span>`;
+                    if (isPro) {
+                        statusBadge = `<span class="bg-gold text-navy text-xs font-bold px-2 py-1 rounded">PRO</span>`;
+                    } else if (isAdmin) {
+                        statusBadge = `<span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">ADMIN</span>`;
+                    }
 
                     const row = `
                         <tr class="hover:bg-gray-50">
@@ -132,11 +172,11 @@
                 });
             } catch (error) {
                 console.error("Error loading users:", error);
-                document.getElementById("user-table-body").innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-500">Database එකෙන් විස්තර ගන්න බැරි වුණා. Database Rules හදලාද බලන්න.</td></tr>`;
+                document.getElementById("user-table-body").innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-500">Database එකෙන් විස්තර ගන්න බැරි වුණා.</td></tr>`;
             }
         }
 
-        // 4. Modal එක Open කිරීම
+        // Modal Open
         window.openModal = function(userId, email) {
             document.getElementById("upgrade-modal").classList.remove("hidden");
             document.getElementById("modal-user-email").innerText = email;
@@ -150,12 +190,12 @@
             document.getElementById("end-date").value = endDate.toISOString().split('T')[0];
         }
 
-        // 5. Modal එක Close කිරීම
+        // Modal Close
         window.closeModal = function() {
             document.getElementById("upgrade-modal").classList.add("hidden");
         }
 
-        // 6. Database එක Update කරලා PRO Access දීම
+        // Update to PRO
         window.updateToPro = async function() {
             const userId = document.getElementById("modal-user-id").value;
             const startDate = document.getElementById("start-date").value;
@@ -176,11 +216,9 @@
                 loadUsers(); 
             } catch (error) {
                 console.error("Error updating document: ", error);
-                alert("Update එක අසාර්ථකයි! Console එක බලන්න.");
+                alert("Update එක අසාර්ථකයි!");
             }
         }
-
-        loadUsers();
     </script>
 </body>
 </html>
