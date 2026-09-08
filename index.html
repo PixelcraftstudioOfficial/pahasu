@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pahasu.lk - The Ultimate Digital Toolkit</title>
     
-    <!-- 🛠️ Auto-Generated Favicon (No extra image files needed!) -->
+    <!-- 🛠️ Auto-Generated Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,7 +21,7 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans pb-20">
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
 
     <!-- Promo Banner -->
     <div class="bg-danger text-white text-center py-2 px-4 text-sm font-bold animate-pulse">
@@ -35,21 +35,21 @@
         </div>
         <div id="nav-buttons">
             <a href="login.html" class="text-white hover:text-gray-300 mr-4 font-semibold">Login</a>
-            <button class="bg-gold text-navy font-bold px-5 py-2 rounded shadow hover:bg-yellow-300 transition">Go Pro</button>
+            <button id="nav-go-pro" class="bg-gold text-navy font-bold px-5 py-2 rounded shadow hover:bg-yellow-300 transition">Go Pro</button>
         </div>
     </nav>
 
     <!-- Top Ad Banner (Responsive Fixed) -->
-    <div class="max-w-6xl mx-auto mt-4 text-center">
+    <div class="max-w-6xl mx-auto mt-4 text-center px-4 w-full">
         <!-- ලැප්ටොප් වලට පෙන්වන 728x90 -->
-        <div class="hidden md:flex justify-center bg-gray-200 border-2 border-dashed border-gray-400 rounded py-2">
+        <div class="hidden md:flex justify-center bg-gray-200 border-2 border-dashed border-gray-400 rounded py-2 overflow-hidden">
             <script>
                 atOptions = { 'key' : '1d429ee809d0b59138033c5ea68addee', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
             </script>
             <script src="https://www.highrevenueformat.com/1d429ee809d0b59138033c5ea68addee/invoke.js"></script>
         </div>
         <!-- ෆෝන් වලට පෙන්වන 300x250 -->
-        <div class="flex md:hidden justify-center bg-gray-200 border-2 border-dashed border-gray-400 rounded py-2 mt-2">
+        <div class="flex md:hidden justify-center bg-gray-200 border-2 border-dashed border-gray-400 rounded py-2 mt-2 overflow-hidden">
             <script>
                 atOptions = { 'key' : '623e144c0eb68a0e658af1b0385ce304', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
             </script>
@@ -69,8 +69,8 @@
     </div>
 
     <!-- Filtering Buttons (Clean Design & Scrollable) -->
-    <div class="max-w-6xl mx-auto px-4 mb-8">
-        <div class="flex overflow-x-auto gap-3 pb-2 no-scrollbar justify-start md:justify-center" id="filter-buttons">
+    <div class="max-w-6xl mx-auto px-4 mb-8 w-full">
+        <div class="flex overflow-x-auto gap-3 pb-2 no-scrollbar justify-start lg:justify-center" id="filter-buttons">
             <button class="filter-btn shrink-0 bg-navy text-white border-navy px-5 py-2 rounded-full font-bold text-sm shadow transition border" data-filter="all">All Tools</button>
             <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="pro">👑 PRO</button>
             <button class="filter-btn shrink-0 bg-white text-gray-700 border-gray-200 hover:bg-gray-50 px-5 py-2 rounded-full font-bold text-sm shadow-sm transition border" data-filter="health">❤️ Health & Fitness</button>
@@ -84,7 +84,7 @@
     </div>
 
     <!-- Tools Grid -->
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 mb-10" id="tools-grid">
+    <div class="max-w-6xl mx-auto flex-grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 mb-16 w-full" id="tools-grid">
         
         <!-- ================= HEALTH & FITNESS ================= -->
         <a href="tool.html?app=bmi-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-red-400 hover:shadow-xl transition" data-category="health" data-tier="free">
@@ -257,10 +257,84 @@
 
     </div>
 
+    <!-- ================= FOOTER SECTION ================= -->
+    <footer class="bg-navy pt-12 pb-6 mt-auto border-t-4 border-gold">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <div>
+                <h3 class="text-white text-3xl font-bold mb-4 tracking-wide">Pahasu<span class="text-gold">.lk</span></h3>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-sm mx-auto md:mx-0">
+                    ශ්‍රී ලංකාවේ අංක 1 ඩිජිටල් මෙවලම් එකතුව. ඔබගේ දෛනික රාජකාරි, අධ්‍යාපන සහ ව්‍යාපාරික කටයුතු වඩාත් පහසු කරගන්න අවශ්‍ය සියලුම Tools දැන් එකම තැනකින්.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white text-lg font-bold mb-4">Quick Links</h4>
+                <ul class="text-gray-400 text-sm space-y-2">
+                    <li><a href="#" class="hover:text-gold transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-gold transition">Terms & Conditions</a></li>
+                    <li><a href="#" class="hover:text-gold transition">Contact Us</a></li>
+                    <li><a href="login.html" class="hover:text-gold transition">Login / Register</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white text-lg font-bold mb-4">Upgrade to Premium</h4>
+                <p class="text-gray-400 text-sm mb-4">No Ads, Premium Tools, Priority Support and more.</p>
+                <button id="footer-go-pro" class="bg-gold text-navy font-bold px-6 py-2 rounded shadow hover:bg-yellow-300 transition text-sm w-full md:w-auto">Get Pahasu PRO</button>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-10 pt-6 text-center">
+            <p class="text-gray-500 text-sm">&copy; 2026 Pahasu.lk - The Ultimate Digital Toolkit. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ================= PRO POPUP MODAL ================= -->
+    <div id="pro-modal" class="fixed inset-0 bg-black bg-opacity-70 z-[100] hidden items-center justify-center p-4 transition-opacity backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl relative">
+            <div class="bg-navy p-6 text-center relative border-b-4 border-gold">
+                <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white transition w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center font-bold">X</button>
+                <h2 class="text-3xl font-black text-white tracking-wide">Pahasu <span class="text-gold">PRO</span></h2>
+                <p class="text-blue-200 text-sm mt-1">Unlock the Ultimate Power</p>
+            </div>
+            
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <span class="text-5xl font-black text-navy block mb-1">Rs. 1000/-</span>
+                    <span class="bg-red-100 text-red-600 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">Lifetime Access (Limited Time)</span>
+                </div>
+
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 p-2 rounded-full"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div>
+                        <p class="text-gray-700 font-bold text-sm">100% Ad-Free Experience (කිසිදු දැන්වීමක් නොමැත)</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 p-2 rounded-full"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div>
+                        <p class="text-gray-700 font-bold text-sm">Unlock PDF to Word & Compress Tools</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 p-2 rounded-full"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div>
+                        <p class="text-gray-700 font-bold text-sm">Legal Draft Generator & Pro Invoice Maker</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 p-2 rounded-full"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div>
+                        <p class="text-gray-700 font-bold text-sm">Priority WhatsApp Support</p>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/94766390768?text=Hi%20Pahasu.lk!%20I%20would%20like%20to%20upgrade%20my%20account%20to%20the%20PRO%20version%20for%20Rs.1000." target="_blank" class="w-full bg-[#25D366] hover:bg-[#1ebd5a] text-white font-bold py-4 rounded-xl shadow-lg transition flex items-center justify-center gap-3 text-lg">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    Contact to Upgrade
+                </a>
+                <p class="text-center text-xs text-gray-400 mt-4">Payments are verified manually via WhatsApp.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script type="module" src="auth.js"></script>
     <script>
-        // Flawless Search & Filter Logic Setup
+        // ==========================================
+        // FLAWLESS SEARCH & FILTER LOGIC
+        // ==========================================
         const filterBtns = document.querySelectorAll('.filter-btn');
         const toolCards = document.querySelectorAll('.tool-card');
         const searchBox = document.getElementById('search-box');
@@ -268,7 +342,6 @@
         let currentFilter = 'all';
         let searchQuery = '';
 
-        // Main function that combines Category Filter AND Search
         function applyFilters() {
             toolCards.forEach(card => {
                 const category = card.getAttribute('data-category');
@@ -276,19 +349,16 @@
                 const title = card.querySelector('h2').innerText.toLowerCase();
                 const desc = card.querySelector('p').innerText.toLowerCase();
 
-                // Check if card matches selected category/tier
                 let matchesFilter = false;
                 if (currentFilter === 'all') matchesFilter = true;
                 else if (currentFilter === 'pro' || currentFilter === 'free') matchesFilter = (tier === currentFilter);
                 else matchesFilter = (category === currentFilter);
 
-                // Check if card matches search text
                 let matchesSearch = true;
                 if (searchQuery !== '') {
                     matchesSearch = title.includes(searchQuery) || desc.includes(searchQuery);
                 }
 
-                // Show only if BOTH match
                 if (matchesFilter && matchesSearch) {
                     card.classList.remove('hidden-card');
                 } else {
@@ -297,16 +367,13 @@
             });
         }
 
-        // Handle Category Button Clicks
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Remove active style from all
                 filterBtns.forEach(b => {
                     b.classList.remove('bg-navy', 'text-white', 'border-navy');
                     b.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
                 });
                 
-                // Add active style to clicked
                 btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
                 btn.classList.add('bg-navy', 'text-white', 'border-navy');
 
@@ -315,10 +382,35 @@
             });
         });
 
-        // Handle Search Input
         searchBox.addEventListener('input', (e) => {
             searchQuery = e.target.value.toLowerCase();
             applyFilters();
+        });
+
+        // ==========================================
+        // PRO MODAL LOGIC
+        // ==========================================
+        const proModal = document.getElementById('pro-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const navGoProBtn = document.getElementById('nav-go-pro');
+        const footerGoProBtn = document.getElementById('footer-go-pro');
+
+        function openModal() {
+            proModal.classList.remove('hidden');
+            proModal.classList.add('flex');
+        }
+
+        function closeModal() {
+            proModal.classList.add('hidden');
+            proModal.classList.remove('flex');
+        }
+
+        if(navGoProBtn) navGoProBtn.addEventListener('click', openModal);
+        if(footerGoProBtn) footerGoProBtn.addEventListener('click', openModal);
+        if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+
+        proModal.addEventListener('click', (e) => {
+            if(e.target === proModal) closeModal();
         });
     </script>
 </body>
