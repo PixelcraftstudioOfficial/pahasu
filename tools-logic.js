@@ -539,3 +539,161 @@ window.onload = loadTool;
             });
         }
     },
+// ==========================================
+    // 8.1 ADVANCED PDF TOOLS
+    // ==========================================
+
+    'split-pdf': {
+        title: "Split PDF Files | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-red-600 max-w-2xl mx-auto text-center">
+                <h1 class="text-3xl font-bold text-navy mb-2">Split PDF</h1>
+                <p class="text-gray-600 mb-6">විශාල PDF ගොනුවකින් ඔබට අවශ්‍ය පිටු (Pages) පමණක් වෙන්කර ලබාගන්න.</p>
+                
+                <div class="border-4 border-dashed border-gray-300 rounded-xl p-8 mb-6 bg-gray-50">
+                    <input type="file" id="split-upload" accept=".pdf" class="hidden">
+                    <label for="split-upload" class="cursor-pointer bg-navy hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg shadow">
+                        Select PDF File
+                    </label>
+                    <p class="text-sm text-gray-500 mt-4" id="split-file-name">කිසිදු ගොනුවක් තෝරා නැත</p>
+                </div>
+
+                <div id="split-options" class="hidden mb-6 text-left bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <p class="font-bold text-navy mb-2">ඔබට අවශ්‍ය පිටු සීමාව ලබා දෙන්න:</p>
+                    <div class="flex items-center gap-4">
+                        <div>
+                            <label class="text-sm text-gray-600 font-bold">Start Page:</label>
+                            <input type="number" id="page-start" min="1" value="1" class="w-full p-2 border-2 border-gray-300 rounded outline-none">
+                        </div>
+                        <div>
+                            <label class="text-sm text-gray-600 font-bold">End Page:</label>
+                            <input type="number" id="page-end" min="1" class="w-full p-2 border-2 border-gray-300 rounded outline-none">
+                        </div>
+                    </div>
+                    <p class="text-xs text-red-500 mt-2 font-bold" id="total-pages-info"></p>
+                </div>
+
+                <button id="btn-split" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg shadow mb-4 hidden">Extract Pages</button>
+                
+                <div id="split-result" class="hidden p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <p class="text-green-700 font-bold mb-2">සාර්ථකයි! ඔබගේ නව PDF ගොනුව සූදානම්.</p>
+                    <a id="download-split" href="#" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded shadow">Download Extracted PDF</a>
+                </div>
+            </div>
+        `,
+        init: function() {
+            let selectedFile = null;
+            let totalPages = 0;
+
+            document.getElementById('split-upload').addEventListener('change', async (e) => {
+                selectedFile = e.target.files[0];
+                if (selectedFile) {
+                    document.getElementById('split-file-name').innerText = selectedFile.name;
+                    
+                    // Load PDF to get total pages
+                    const arrayBuffer = await selectedFile.arrayBuffer();
+                    const { PDFDocument } = window.PDFLib;
+                    const pdf = await PDFDocument.load(arrayBuffer);
+                    totalPages = pdf.getPageCount();
+
+                    document.getElementById('page-end').value = totalPages;
+                    document.getElementById('total-pages-info').innerText = \`මෙම ගොනුවේ මුළු පිටු ගණන: \${totalPages}\`;
+                    
+                    document.getElementById('split-options').classList.remove('hidden');
+                    document.getElementById('btn-split').classList.remove('hidden');
+                    document.getElementById('split-result').classList.add('hidden');
+                }
+            });
+
+            document.getElementById('btn-split').addEventListener('click', async () => {
+                const start = parseInt(document.getElementById('page-start').value);
+                const end = parseInt(document.getElementById('page-end').value);
+                
+                if(start < 1 || end > totalPages || start > end) {
+                    return alert("කරුණාකර නිවැරදි පිටු සීමාවක් ලබා දෙන්න!");
+                }
+
+                const btn = document.getElementById('btn-split');
+                btn.innerText = "Extracting... Please wait";
+                btn.disabled = true;
+
+                try {
+                    const arrayBuffer = await selectedFile.arrayBuffer();
+                    const { PDFDocument } = window.PDFLib;
+                    const originalPdf = await PDFDocument.load(arrayBuffer);
+                    const newPdf = await PDFDocument.create();
+
+                    // Pages are 0-indexed in pdf-lib
+                    const pagesToExtract = [];
+                    for(let i = start - 1; i <= end - 1; i++) { pagesToExtract.push(i); }
+
+                    const copiedPages = await newPdf.copyPages(originalPdf, pagesToExtract);
+                    copiedPages.forEach((page) => newPdf.addPage(page));
+
+                    const pdfBytes = await newPdf.save();
+                    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(blob);
+
+                    const downloadLink = document.getElementById('download-split');
+                    downloadLink.href = url;
+                    downloadLink.download = \`Pahasu_Split_Pages_\${start}-\${end}.pdf\`;
+                    
+                    document.getElementById('split-result').classList.remove('hidden');
+                    btn.innerText = "Extract Pages";
+                    btn.disabled = false;
+                } catch (error) {
+                    alert("Error splitting PDF.");
+                    btn.innerText = "Extract Pages";
+                    btn.disabled = false;
+                }
+            });
+        }
+    },
+
+    'pdf-compressor': {
+        title: "PDF Compressor | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-red-600 max-w-2xl mx-auto text-center relative overflow-hidden">
+                <div class="absolute top-4 right-[-35px] bg-gold text-navy font-bold py-1 px-10 transform rotate-45 text-sm shadow-md">PRO</div>
+                <h1 class="text-3xl font-bold text-navy mb-2">PDF Compressor</h1>
+                <p class="text-gray-600 mb-6">ඊමේල් හරහා යැවීමට පහසු වන පරිදි PDF ගොනු වල සයිස් එක අඩු කරන්න.</p>
+                
+                <div class="border-4 border-dashed border-gray-300 rounded-xl p-8 mb-6 bg-gray-50 opacity-70">
+                    <button class="bg-gray-400 text-white font-bold py-3 px-6 rounded-lg shadow cursor-not-allowed">
+                        Select PDF File
+                    </button>
+                    <p class="text-sm text-gray-500 mt-4">Max file size: 50MB</p>
+                </div>
+                
+                <div class="bg-yellow-50 border border-gold p-4 rounded-lg">
+                    <h3 class="font-bold text-navy text-lg mb-2">⚠️ Server Upgrade Required</h3>
+                    <p class="text-sm text-gray-700">මෙම මෙවලම සඳහා Cloud Server Processing අවශ්‍ය වේ. මෙම පහසුකම ළඟදීම අපගේ PRO පරිශීලකයින් සඳහා විවෘත වනු ඇත!</p>
+                </div>
+            </div>
+        `,
+        init: function() { /* UI Only */ }
+    },
+
+    'pdf-to-word': {
+        title: "PDF to Word Converter | Pahasu.lk",
+        html: `
+            <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-blue-600 max-w-2xl mx-auto text-center relative overflow-hidden">
+                <div class="absolute top-4 right-[-35px] bg-gold text-navy font-bold py-1 px-10 transform rotate-45 text-sm shadow-md">PRO</div>
+                <h1 class="text-3xl font-bold text-blue-600 mb-2">PDF to Word</h1>
+                <p class="text-gray-600 mb-6">PDF ලියවිලි නැවත එඩිට් කළ හැකි Microsoft Word (.docx) ෆෝමැට් එකට හරවන්න.</p>
+                
+                <div class="border-4 border-dashed border-gray-300 rounded-xl p-8 mb-6 bg-gray-50 opacity-70">
+                    <button class="bg-gray-400 text-white font-bold py-3 px-6 rounded-lg shadow cursor-not-allowed">
+                        Select PDF File
+                    </button>
+                    <p class="text-sm text-gray-500 mt-4">OCR (Text Recognition) Supported</p>
+                </div>
+                
+                <div class="bg-yellow-50 border border-gold p-4 rounded-lg">
+                    <h3 class="font-bold text-navy text-lg mb-2">⚠️ PRO Feature Coming Soon</h3>
+                    <p class="text-sm text-gray-700">මෙය Advanced AI තාක්ෂණය භාවිතා කරන මෙවලමකි. ළඟදීම Pahasu PRO හරහා ඔබට මෙය භාවිතා කළ හැක.</p>
+                </div>
+            </div>
+        `,
+        init: function() { /* UI Only */ }
+    },
