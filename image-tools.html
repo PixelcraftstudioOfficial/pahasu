@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compressor & WebP Converter | Pahasu.lk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { navy: '#0f172a', gold: '#fbbf24' } } } }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-navy p-4 shadow-lg flex justify-between items-center sticky top-0 z-50">
+        <a href="index.html" class="text-white text-3xl font-bold tracking-wide hover:opacity-90">
+            Pahasu<span class="text-gold">.lk</span>
+        </a>
+        <div id="nav-buttons">
+            <a href="index.html" class="text-white hover:text-gray-300 mr-4 font-semibold hidden md:inline">Back to Tools</a>
+            <button class="bg-gold text-navy font-bold px-5 py-2 rounded shadow hover:bg-yellow-300 transition">Go Pro</button>
+        </div>
+    </nav>
+
+    <!-- Top Ad Placeholder -->
+    <div class="max-w-4xl mx-auto mt-6 bg-gray-200 border-2 border-dashed border-gray-400 text-center py-4 text-gray-500 rounded w-full">
+        [ Google AdSense Banner - Top ]
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-5xl mx-auto w-full px-4 py-8 flex-grow">
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-navy mb-2">Image Compressor & Converter</h1>
+            <p class="text-gray-600">ගුණාත්මකබව (Quality) අඩු නොකර පින්තූර වල Size එක අඩු කරන්න. WebP බවට පත් කරන්න.</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-navy">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Left Side: Controls & Upload -->
+                <div>
+                    <!-- Upload Area -->
+                    <label class="block w-full border-2 border-dashed border-navy rounded-lg p-10 text-center cursor-pointer hover:bg-gray-50 transition mb-6">
+                        <svg class="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <span class="text-gray-600 font-bold">Click to Upload Image</span>
+                        <input type="file" id="upload-image" accept="image/png, image/jpeg, image/webp" class="hidden">
+                    </label>
+
+                    <!-- Compression Settings -->
+                    <div class="bg-gray-50 p-4 rounded border mb-6">
+                        <h3 class="font-bold text-gray-700 mb-4">Settings</h3>
+                        
+                        <label class="block text-sm font-bold text-gray-600 mb-1">Convert To:</label>
+                        <select id="format-select" class="w-full p-2 border rounded mb-4 focus:outline-none focus:ring-2 focus:ring-navy">
+                            <option value="image/webp">WebP (Best for Web)</option>
+                            <option value="image/jpeg">JPEG (Standard)</option>
+                            <option value="image/png">PNG (Lossless - No Compression)</option>
+                        </select>
+
+                        <label class="block text-sm font-bold text-gray-600 mb-1">Image Quality: <span id="quality-val">80%</span></label>
+                        <input type="range" id="quality-slider" min="0.1" max="1" step="0.05" value="0.8" class="w-full mb-2">
+                        <p class="text-xs text-gray-500">අඩු Quality එකක් ලබාදීමෙන් Size එක තවත් අඩු කරගත හැක.</p>
+                    </div>
+
+                    <button id="download-btn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded shadow-lg transition opacity-50 cursor-not-allowed" disabled>
+                        Download Compressed Image
+                    </button>
+                </div>
+
+                <!-- Right Side: Preview -->
+                <div class="flex flex-col">
+                    <h3 class="font-bold text-gray-700 mb-2">Live Preview</h3>
+                    <div class="flex-grow border rounded bg-gray-100 flex items-center justify-center p-2 relative overflow-hidden min-h-[300px]">
+                        <img id="preview-img" src="" alt="Preview" class="max-w-full max-h-full hidden">
+                        <span id="preview-text" class="text-gray-400 font-bold">No Image Selected</span>
+                    </div>
+                    
+                    <!-- File Size Info -->
+                    <div class="mt-4 grid grid-cols-2 gap-4">
+                        <div class="bg-red-50 p-3 rounded border border-red-200 text-center">
+                            <span class="block text-xs font-bold text-red-500">Original Size</span>
+                            <span id="original-size" class="text-lg font-bold text-gray-700">-</span>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded border border-green-200 text-center">
+                            <span class="block text-xs font-bold text-green-600">Compressed Size</span>
+                            <span id="compressed-size" class="text-lg font-bold text-gray-700">-</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Ad Placeholder -->
+    <div class="max-w-4xl mx-auto mb-8 bg-gray-200 border-2 border-dashed border-gray-400 text-center py-4 text-gray-500 rounded w-full">
+        [ Google AdSense Banner - Bottom ]
+    </div>
+
+    <!-- Auth Integration -->
+    <script type="module" src="auth.js"></script>
+
+    <!-- Compressor Logic -->
+    <script>
+        const uploadInput = document.getElementById('upload-image');
+        const formatSelect = document.getElementById('format-select');
+        const qualitySlider = document.getElementById('quality-slider');
+        const qualityVal = document.getElementById('quality-val');
+        
+        const previewImg = document.getElementById('preview-img');
+        const previewText = document.getElementById('preview-text');
+        const downloadBtn = document.getElementById('download-btn');
+        
+        const originalSizeText = document.getElementById('original-size');
+        const compressedSizeText = document.getElementById('compressed-size');
+
+        let originalFile = null;
+        let compressedDataUrl = null;
+
+        // Update Slider Text
+        qualitySlider.addEventListener('input', (e) => {
+            qualityVal.innerText = `${Math.round(e.target.value * 100)}%`;
+            if (originalFile) compressImage(); // Live compression update
+        });
+
+        // Format Change
+        formatSelect.addEventListener('change', () => {
+            if (originalFile) compressImage();
+        });
+
+        // File Upload
+        uploadInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            originalFile = file;
+            originalSizeText.innerText = formatBytes(file.size);
+            
+            compressImage();
+        });
+
+        // Compression Engine using HTML5 Canvas
+        function compressImage() {
+            const reader = new FileReader();
+            reader.readAsDataURL(originalFile);
+            
+            reader.onload = function(event) {
+                const img = new Image();
+                img.src = event.target.result;
+                
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Set canvas dimensions to image dimensions
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Draw image on canvas
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    // Get settings
+                    const format = formatSelect.value;
+                    const quality = parseFloat(qualitySlider.value);
+
+                    // Convert to new format/quality
+                    compressedDataUrl = canvas.toDataURL(format, quality);
+
+                    // Update Preview
+                    previewImg.src = compressedDataUrl;
+                    previewImg.classList.remove('hidden');
+                    previewText.classList.add('hidden');
+
+                    // Calculate new size (Base64 size approximation)
+                    const base64str = compressedDataUrl.split(',')[1];
+                    const decoded = atob(base64str);
+                    const newSize = decoded.length;
+                    
+                    compressedSizeText.innerText = formatBytes(newSize);
+
+                    // Enable Download
+                    downloadBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    downloadBtn.removeAttribute('disabled');
+                }
+            }
+        }
+
+        // Download Button Click
+        downloadBtn.addEventListener('click', () => {
+            if (!compressedDataUrl) return;
+            
+            const a = document.createElement('a');
+            a.href = compressedDataUrl;
+            
+            // Generate filename
+            const ext = formatSelect.value === 'image/webp' ? 'webp' : (formatSelect.value === 'image/jpeg' ? 'jpg' : 'png');
+            a.download = `Pahasu_Compressed.${ext}`;
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
+        // Utility: Format Bytes
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+    </script>
+</body>
+</html>

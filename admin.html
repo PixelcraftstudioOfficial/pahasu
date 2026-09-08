@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pahasu Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { navy: '#0f172a', gold: '#fbbf24', danger: '#ef4444', success: '#22c55e' }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <!-- Admin Navbar -->
+    <nav class="bg-navy p-4 shadow-md flex justify-between items-center">
+        <div class="text-white text-2xl font-bold">Pahasu <span class="text-gold">Admin</span></div>
+        <div class="text-white">Admin Logged In</div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto mt-8 p-4">
+        <h1 class="text-2xl font-bold text-navy mb-6">User Management (PRO Access Control)</h1>
+
+        <!-- Users Table -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-700">
+                        <th class="p-3 border-b">Name</th>
+                        <th class="p-3 border-b">Email</th>
+                        <th class="p-3 border-b">Status</th>
+                        <th class="p-3 border-b">PRO Expiry Date</th>
+                        <th class="p-3 border-b">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="user-table-body">
+                    <!-- Users ලා Firebase එකෙන් ඇවිත් මෙතන පිරෙනවා -->
+                    <tr><td colspan="5" class="p-4 text-center text-gray-500">Loading Users...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Upgrade Modal (Hidden by default) -->
+    <div id="upgrade-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 class="text-xl font-bold mb-4">Grant PRO Access</h2>
+            <p id="modal-user-email" class="text-gray-600 mb-4 font-semibold"></p>
+            
+            <input type="hidden" id="modal-user-id">
+            
+            <div class="mb-4">
+                <label class="block text-sm font-bold mb-1">Start Date:</label>
+                <input type="date" id="start-date" class="w-full border p-2 rounded">
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-bold mb-1">End Date (3 Months Promo):</label>
+                <input type="date" id="end-date" class="w-full border p-2 rounded">
+            </div>
+            
+            <div class="flex justify-end gap-2">
+                <button onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                <button onclick="updateToPro()" class="px-4 py-2 bg-success text-white font-bold rounded hover:bg-green-600">Approve PRO</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK & Logic -->
+    <script type="module">
+        // 1. Firebase Imports (v12.18.0)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
+
+        // 2. ඔබගේ Firebase Config එක
+        const firebaseConfig = {
+            apiKey: "AIzaSyCVvx29Bi_dK22QA9LvqmkQa47CDzlRSos",
+            authDomain: "pahasu-lk.firebaseapp.com",
+            projectId: "pahasu-lk",
+            storageBucket: "pahasu-lk.firebasestorage.app",
+            messagingSenderId: "817810048963",
+            appId: "1:817810048963:web:ac09ddc8f0e8c1ae455f76",
+            measurementId: "G-574L3FNX2J"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        // 3. Database එකෙන් Users ලාව අරන් Table එකට දාන Function එක
+        async function loadUsers() {
+            try {
+                const usersCol = collection(db, "users");
+                const userSnapshot = await getDocs(usersCol);
+                const tableBody = document.getElementById("user-table-body");
+                tableBody.innerHTML = ""; // Clear loading text
+
+                if (userSnapshot.empty) {
+                    tableBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-500">තාම කිසිම User කෙනෙක් නෑ.</td></tr>`;
+                    return;
+                }
+
+                userSnapshot.forEach((userDoc) => {
+                    const user = userDoc.data();
+                    const userId = userDoc.id;
+                    
+                    const isPro = user.role === "pro";
+                    const statusBadge = isPro 
+                        ? `<span class="bg-gold text-navy text-xs font-bold px-2 py-1 rounded">PRO</span>` 
+                        : `<span class="bg-gray-300 text-gray-700 text-xs font-bold px-2 py-1 rounded">FREE</span>`;
+
+                    const row = `
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 border-b">${user.name || 'N/A'}</td>
+                            <td class="p-3 border-b">${user.email}</td>
+                            <td class="p-3 border-b">${statusBadge}</td>
+                            <td class="p-3 border-b">${user.pro_end_date || '-'}</td>
+                            <td class="p-3 border-b">
+                                <button onclick="openModal('${userId}', '${user.email}')" class="text-white bg-navy px-3 py-1 rounded hover:bg-blue-800 text-sm">
+                                    Upgrade / Edit
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error("Error loading users:", error);
+                document.getElementById("user-table-body").innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-500">Database එකෙන් විස්තර ගන්න බැරි වුණා. Database Rules හදලාද බලන්න.</td></tr>`;
+            }
+        }
+
+        // 4. Modal එක Open කිරීම
+        window.openModal = function(userId, email) {
+            document.getElementById("upgrade-modal").classList.remove("hidden");
+            document.getElementById("modal-user-email").innerText = email;
+            document.getElementById("modal-user-id").value = userId;
+
+            const today = new Date();
+            const endDate = new Date();
+            endDate.setMonth(today.getMonth() + 3);
+
+            document.getElementById("start-date").value = today.toISOString().split('T')[0];
+            document.getElementById("end-date").value = endDate.toISOString().split('T')[0];
+        }
+
+        // 5. Modal එක Close කිරීම
+        window.closeModal = function() {
+            document.getElementById("upgrade-modal").classList.add("hidden");
+        }
+
+        // 6. Database එක Update කරලා PRO Access දීම
+        window.updateToPro = async function() {
+            const userId = document.getElementById("modal-user-id").value;
+            const startDate = document.getElementById("start-date").value;
+            const endDate = document.getElementById("end-date").value;
+
+            if(!startDate || !endDate) return alert("කරුණාකර දින ඇතුළත් කරන්න.");
+
+            try {
+                const userRef = doc(db, "users", userId);
+                await updateDoc(userRef, {
+                    role: "pro",
+                    pro_start_date: startDate,
+                    pro_end_date: endDate
+                });
+                
+                alert("PRO Access සාර්ථකව ලබා දුන්නා!");
+                closeModal();
+                loadUsers(); 
+            } catch (error) {
+                console.error("Error updating document: ", error);
+                alert("Update එක අසාර්ථකයි! Console එක බලන්න.");
+            }
+        }
+
+        loadUsers();
+    </script>
+</body>
+</html>

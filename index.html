@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pahasu.lk - The Ultimate Digital Toolkit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { navy: '#0f172a', gold: '#fbbf24', danger: '#ef4444' } } } }
+    </script>
+    <style>
+        .tool-card { transition: all 0.3s ease-in-out; }
+        .hidden-card { display: none !important; opacity: 0; transform: scale(0.9); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans pb-20">
+
+    <!-- Promo Banner -->
+    <div class="bg-danger text-white text-center py-2 px-4 text-sm font-bold animate-pulse">
+        🎉 දෙසැම්බර් 31 ට පෙර Register වන සැමට Pahasu PRO මාස 3ක් සම්පූර්ණයෙන්ම නොමිලේ!
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-navy p-4 shadow-lg flex justify-between items-center sticky top-0 z-50">
+        <div class="text-white text-3xl font-bold tracking-wide cursor-pointer">
+            Pahasu<span class="text-gold">.lk</span>
+        </div>
+        <div id="nav-buttons">
+            <button class="text-white hover:text-gray-300 mr-4 font-semibold">Login</button>
+            <button class="bg-gold text-navy font-bold px-5 py-2 rounded shadow hover:bg-yellow-300 transition">Go Pro</button>
+        </div>
+    </nav>
+
+    <!-- Top Ad Banner -->
+    <div class="max-w-6xl mx-auto mt-4 bg-gray-200 border-2 border-dashed border-gray-400 text-center py-4 text-gray-500 rounded">
+        [ Google AdSense - Top Banner ]
+    </div>
+
+    <!-- Hero Section -->
+    <div class="text-center py-10 px-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-navy mb-4">සියලුම ඩිජිටල් මෙවලම් <span class="text-gold">එකම තැනකින්</span></h1>
+        <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">වෙබ්, ග්‍රැෆික්, සහ ඔෆිස් වැඩ පහසු කරන නොමිලේ සහ ප්‍රිමියම් මෙවලම් 20+ කට වඩා.</p>
+        
+        <div class="max-w-xl mx-auto relative">
+            <input type="text" id="search-box" placeholder="මෙවලමක් සොයන්න... (e.g. Invoice, Unicode)" class="w-full p-4 pl-12 rounded-full border-2 border-gray-300 focus:border-navy outline-none shadow-sm text-lg">
+            <svg class="w-6 h-6 absolute left-4 top-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+    </div>
+
+    <!-- Filtering Buttons -->
+    <div class="max-w-6xl mx-auto px-4 mb-8 flex flex-wrap justify-center gap-3" id="filter-buttons">
+        <button class="filter-btn bg-navy text-white px-4 py-2 rounded-full font-bold text-sm shadow" data-filter="all">All Tools</button>
+        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-full font-bold text-sm transition" data-filter="pro">👑 PRO Only</button>
+        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-full font-bold text-sm transition" data-filter="free">✅ Free Only</button>
+        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-full font-bold text-sm transition" data-filter="business">💼 Business & Legal</button>
+        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-full font-bold text-sm transition" data-filter="image">🖼️ Image & Media</button>
+        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-full font-bold text-sm transition" data-filter="text">📝 Text & Dev</button>
+    </div>
+
+    <!-- Tools Grid -->
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-4 mb-10" id="tools-grid">
+        
+        <!-- Independent Pages -->
+        <a href="unicode.html" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-navy hover:shadow-xl transition" data-category="text" data-tier="free">
+            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">Sinhala Unicode 🔄 FM</h2>
+            <p class="text-gray-500 text-xs">අන්තර්ජාලයේ ඇති යුනිකෝඩ් අකුරු FM Abhaya බවට හරවන්න.</p>
+        </a>
+
+        <a href="legal.html" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-gold relative hover:shadow-xl transition" data-category="business" data-tier="pro">
+            <div class="absolute top-0 right-0 bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded-bl-lg">PRO</div>
+            <h2 class="text-lg font-bold text-navy mb-1 mt-3">Legal Draft Generator</h2>
+            <p class="text-gray-500 text-xs">නිවාස/වාහන ගිවිසුම් නීත්‍යානුකූලව ස්වයංක්‍රීයව සාදාගන්න.</p>
+        </a>
+
+        <a href="invoice.html" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-gold relative hover:shadow-xl transition" data-category="business" data-tier="pro">
+            <div class="absolute top-0 right-0 bg-gold text-navy text-[10px] font-bold px-2 py-1 rounded-bl-lg">PRO</div>
+            <h2 class="text-lg font-bold text-navy mb-1 mt-3">Pro Invoice Maker</h2>
+            <p class="text-gray-500 text-xs">ව්‍යාපාරයේ Logo එක සහිතව Professional Invoices හදන්න.</p>
+        </a>
+
+        <a href="image-tools.html" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-navy hover:shadow-xl transition" data-category="image" data-tier="free">
+            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">Image Compressor & WebP</h2>
+            <p class="text-gray-500 text-xs">පින්තූර වල ගුණාත්මකබව නොනසා Size එක අඩු කරගන්න.</p>
+        </a>
+
+        <!-- Master Template Apps -->
+        <a href="tool.html?app=age-calculator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-navy hover:shadow-xl transition" data-category="text" data-tier="free">
+            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">Age Calculator</h2>
+            <p class="text-gray-500 text-xs">අද දිනයට ඔබේ නිවැරදිම වයස (අවුරුදු/මාස/දින) ගණනය කරන්න.</p>
+        </a>
+
+        <a href="tool.html?app=qr-generator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-navy hover:shadow-xl transition" data-category="business" data-tier="free">
+            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">QR Code Generator</h2>
+            <p class="text-gray-500 text-xs">ඔබගේ වෙබ් අඩවියට හෝ දුරකථන අංකයට QR කේතයක් සාදන්න.</p>
+        </a>
+
+        <a href="tool.html?app=word-counter" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-navy hover:shadow-xl transition" data-category="text" data-tier="free">
+            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">Word & Character Count</h2>
+            <p class="text-gray-500 text-xs">ලිපියක ඇති වචන ගණන සහ කියවීමට යන කාලය පරීක්ෂා කරන්න.</p>
+        </a>
+
+        <a href="tool.html?app=password-generator" class="tool-card bg-white p-5 rounded-xl shadow border-t-4 border-navy hover:shadow-xl transition" data-category="text" data-tier="free">
+            <span class="bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-1 rounded mb-2 inline-block">FREE</span>
+            <h2 class="text-lg font-bold text-navy mb-1">Secure Pass Generator</h2>
+            <p class="text-gray-500 text-xs">හැක් කිරීමට නොහැකි ශක්තිමත් මුරපද (Passwords) සාදාගන්න.</p>
+        </a>
+
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="auth.js"></script>
+    <script>
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const toolCards = document.querySelectorAll('.tool-card');
+        const searchBox = document.getElementById('search-box');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-navy', 'text-white');
+                    b.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                btn.classList.remove('bg-gray-200', 'text-gray-700');
+                btn.classList.add('bg-navy', 'text-white');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                toolCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    const tier = card.getAttribute('data-tier');
+
+                    if (filterValue === 'all') {
+                        card.classList.remove('hidden-card');
+                    } else if (filterValue === 'pro' || filterValue === 'free') {
+                        if (tier === filterValue) card.classList.remove('hidden-card');
+                        else card.classList.add('hidden-card');
+                    } else {
+                        if (category === filterValue) card.classList.remove('hidden-card');
+                        else card.classList.add('hidden-card');
+                    }
+                });
+            });
+        });
+
+        searchBox.addEventListener('input', (e) => {
+            const searchText = e.target.value.toLowerCase();
+            toolCards.forEach(card => {
+                const title = card.querySelector('h2').innerText.toLowerCase();
+                const desc = card.querySelector('p').innerText.toLowerCase();
+                if (title.includes(searchText) || desc.includes(searchText)) {
+                    card.classList.remove('hidden-card');
+                } else {
+                    card.classList.add('hidden-card');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

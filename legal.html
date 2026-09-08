@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Legal Drafts | Pahasu.lk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { navy: '#0f172a', gold: '#fbbf24' } } } }
+    </script>
+    <style>
+        .sinhala-doc { font-family: 'Iskoola Pota', 'Nirmala UI', sans-serif; line-height: 1.8; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-navy p-4 shadow-lg flex justify-between items-center sticky top-0 z-50">
+        <a href="index.html" class="text-white text-3xl font-bold tracking-wide hover:opacity-90">
+            Pahasu<span class="text-gold">.lk</span>
+        </a>
+        <div id="nav-buttons">
+            <a href="index.html" class="text-white hover:text-gray-300 mr-4 font-semibold hidden md:inline">Back to Tools</a>
+            <button class="bg-gold text-navy font-bold px-5 py-2 rounded shadow hover:bg-yellow-300 transition">Go Pro</button>
+        </div>
+    </nav>
+
+    <div class="max-w-6xl mx-auto w-full px-4 py-8 flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left Side: Input Form -->
+        <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg border-t-4 border-navy">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-navy">නිවාස කුලී ගිවිසුම (Rent Agreement)</h1>
+                <span class="bg-gold text-navy text-xs font-bold px-3 py-1 rounded shadow">PRO TOOL</span>
+            </div>
+            
+            <p class="text-sm text-gray-600 mb-6">පහත විස්තර ඇතුළත් කරන්න. ගිවිසුම ස්වයංක්‍රීයව සැකසෙනු ඇත.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Landlord Details -->
+                <div class="bg-blue-50 p-4 rounded border border-blue-100">
+                    <h2 class="font-bold mb-3 text-navy">අයිතිකරුගේ විස්තර (Landlord)</h2>
+                    <input type="text" id="l-name" placeholder="සම්පූර්ණ නම" class="w-full mb-2 p-2 border rounded focus:ring-2 focus:ring-navy outline-none">
+                    <input type="text" id="l-nic" placeholder="ජාතික හැඳුනුම්පත් අංකය" class="w-full mb-2 p-2 border rounded focus:ring-2 focus:ring-navy outline-none">
+                    <input type="text" id="l-address" placeholder="ස්ථිර ලිපිනය" class="w-full mb-2 p-2 border rounded focus:ring-2 focus:ring-navy outline-none">
+                </div>
+
+                <!-- Tenant Details -->
+                <div class="bg-green-50 p-4 rounded border border-green-100">
+                    <h2 class="font-bold mb-3 text-green-800">කුලියට ගන්නාගේ විස්තර (Tenant)</h2>
+                    <input type="text" id="t-name" placeholder="සම්පූර්ණ නම" class="w-full mb-2 p-2 border rounded focus:ring-2 focus:ring-navy outline-none">
+                    <input type="text" id="t-nic" placeholder="ජාතික හැඳුනුම්පත් අංකය" class="w-full mb-2 p-2 border rounded focus:ring-2 focus:ring-navy outline-none">
+                    <input type="text" id="t-address" placeholder="ස්ථිර ලිපිනය" class="w-full mb-2 p-2 border rounded focus:ring-2 focus:ring-navy outline-none">
+                </div>
+            </div>
+
+            <!-- Agreement Details -->
+            <div class="bg-gray-50 p-4 rounded border mb-6">
+                <h2 class="font-bold mb-3 text-gray-700">දේපල හා ගිවිසුම් විස්තර</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-gray-500">කුලියට දෙන දේපලෙහි ලිපිනය</label>
+                        <input type="text" id="prop-address" placeholder="දේපලෙහි ලිපිනය" class="w-full p-2 border rounded outline-none">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-500">ගිවිසුම ආරම්භ වන දිනය</label>
+                        <input type="date" id="start-date" class="w-full p-2 border rounded outline-none">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-500">මාසික කුලිය (රු.)</label>
+                        <input type="number" id="rent-amount" placeholder="උදා: 25000" class="w-full p-2 border rounded outline-none">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-500">අත්තිකාරම් මුදල / Key Money (රු.)</label>
+                        <input type="number" id="advance-amount" placeholder="උදා: 100000" class="w-full p-2 border rounded outline-none">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Side: Actions -->
+        <div class="flex flex-col gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-gold text-center">
+                <h2 class="text-xl font-bold text-navy mb-4">Download Document</h2>
+                <p class="text-sm text-gray-600 mb-6">ඔබගේ නීතිමය ලියවිල්ල PDF එකක් ලෙස ලබාගන්න.</p>
+                
+                <button onclick="generateLegalPDF()" class="w-full bg-navy hover:bg-blue-900 text-white font-bold py-3 px-4 rounded-lg shadow-lg transition mb-3 text-lg">
+                    Generate PDF
+                </button>
+                
+                <div class="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-left">
+                    <span class="font-bold text-yellow-700">🔒 PRO Feature Notice:</span>
+                    <p class="text-gray-600 mt-1 text-xs">මෙම පහසුකම භාවිතා කිරීම සඳහා Pahasu PRO පැකේජය සක්‍රිය කර තිබීම අනිවාර්ය වේ. Free පරිශීලකයින් සඳහා ලියවිල්ල හරහා Watermark එකක් සටහන් වනු ඇත.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden PDF Template -->
+    <div id="legal-template-container" style="display: none;">
+        <div id="pdf-content" class="sinhala-doc" style="padding: 60px; font-size: 14px; color: #000; background: #fff; width: 800px; text-align: justify; position: relative;">
+            
+            <h1 style="text-align: center; font-size: 20px; font-weight: bold; text-decoration: underline; margin-bottom: 30px;">නිවාස කුලී ගිවිසුම</h1>
+
+            <p style="margin-bottom: 20px;">
+                වර්ෂ <span id="pdf-year" style="font-weight: bold;">.......</span> ක් වූ <span id="pdf-month" style="font-weight: bold;">.......</span> මස <span id="pdf-day" style="font-weight: bold;">.......</span> වන දින ශ්‍රී ලංකා ප්‍රජාතාන්ත්‍රික සමාජවාදී ජනරජයේ දී පහත සඳහන් පාර්ශවයන් අතර මෙම ගිවිසුම අත්සන් කරනු ලැබේ.
+            </p>
+
+            <div style="margin-bottom: 20px; padding-left: 20px;">
+                <p><strong>පළමු පාර්ශවය (අයිතිකරු):</strong><br>
+                ජාතික හැඳුනුම්පත් අංක <span id="pdf-l-nic" style="font-weight: bold;">..................</span> දරණ, <span id="pdf-l-address" style="font-weight: bold;">......................................</span> හි පදිංචි <span id="pdf-l-name" style="font-weight: bold;">......................................</span> (මෙතැන් පටන් "අයිතිකරු" ලෙස හැඳින්වේ).</p>
+            </div>
+
+            <div style="margin-bottom: 30px; padding-left: 20px;">
+                <p><strong>දෙවන පාර්ශවය (කුලීකරු):</strong><br>
+                ජාතික හැඳුනුම්පත් අංක <span id="pdf-t-nic" style="font-weight: bold;">..................</span> දරණ, <span id="pdf-t-address" style="font-weight: bold;">......................................</span> හි පදිංචි <span id="pdf-t-name" style="font-weight: bold;">......................................</span> (මෙතැන් පටන් "කුලීකරු" ලෙස හැඳින්වේ).</p>
+            </div>
+
+            <p style="margin-bottom: 15px;"><strong>කොන්දේසි:</strong></p>
+            <ol style="margin-bottom: 40px; padding-left: 20px;">
+                <li style="margin-bottom: 10px;">අයිතිකරුට අයත් වූ ද, <span id="pdf-prop-address" style="font-weight: bold;">......................................</span> හි පිහිටියා වූ ද නිවස / දේපල මෙම ගිවිසුම මගින් කුලීකරු වෙත පවරා දෙනු ලැබේ.</li>
+                <li style="margin-bottom: 10px;">මෙම දේපලෙහි මාසික කුලිය රුපියල් <span id="pdf-rent" style="font-weight: bold;">.............</span> ක් ලෙස දෙපාර්ශවයේ එකඟතාවයෙන් තීරණය කර ඇත.</li>
+                <li style="margin-bottom: 10px;">කුලීකරු විසින් අයිතිකරු වෙත රුපියල් <span id="pdf-advance" style="font-weight: bold;">.............</span> ක මුදලක් ආපසු ගෙවන පදනම මත අත්තිකාරම් (Key Money) මුදලක් ලෙස ගෙවා ඇත.</li>
+                <li style="margin-bottom: 10px;">මෙම ගිවිසුම <span id="pdf-start-date" style="font-weight: bold;">.............</span> දින සිට වසරක (මාස 12 ක) කාලයක් සඳහා වලංගු වේ.</li>
+                <li style="margin-bottom: 10px;">ජලය, විදුලිය සහ අනෙකුත් බිල්පත් ගෙවීමේ වගකීම කුලීකරු සතු වේ. දේපලට කිසිදු ව්‍යුහාත්මක වෙනසක් කිරීම හෝ හානියක් කිරීම කුලීකරුට තහනම් වේ.</li>
+            </ol>
+
+            <p style="margin-bottom: 60px;">මෙම කොන්දේසි සියල්ල කියවා තේරුම් ගෙන, නිවැරදි බවට සාක්ෂි වශයෙන් දෙපාර්ශවයම පහතින් අත්සන් කරන ලදී.</p>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 50px;">
+                <div style="text-align: center;">
+                    <p>.............................................</p>
+                    <p>අයිතිකරුගේ අත්සන</p>
+                </div>
+                <div style="text-align: center;">
+                    <p>.............................................</p>
+                    <p>කුලීකරුගේ අත්සන</p>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 60px;">
+                <div style="text-align: left; width: 45%;">
+                    <p>සාක්ෂිකරු 1 : .............................................</p>
+                    <p>ජා.හැ.අ : .............................................</p>
+                </div>
+                <div style="text-align: left; width: 45%;">
+                    <p>සාක්ෂිකරු 2 : .............................................</p>
+                    <p>ජා.හැ.අ : .............................................</p>
+                </div>
+            </div>
+
+            <!-- PRO Watermark Logic -->
+            <div id="pdf-watermark-legal" style="position: absolute; top: 40%; left: 10%; font-size: 60px; color: rgba(239, 68, 68, 0.15); transform: rotate(-30deg); border: 5px solid rgba(239, 68, 68, 0.15); padding: 20px; font-weight: bold; pointer-events: none;">
+                UNREGISTERED FREE VERSION<br><span style="font-size: 30px;">Upgrade to PRO at Pahasu.lk</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Auth Logic Integration -->
+    <script type="module" src="auth.js"></script>
+
+    <script>
+        document.getElementById('start-date').valueAsDate = new Date();
+
+        function generateLegalPDF() {
+            // Data Binding
+            document.getElementById('pdf-l-name').innerText = document.getElementById('l-name').value || '.........................';
+            document.getElementById('pdf-l-nic').innerText = document.getElementById('l-nic').value || '.........................';
+            document.getElementById('pdf-l-address').innerText = document.getElementById('l-address').value || '.........................';
+            
+            document.getElementById('pdf-t-name').innerText = document.getElementById('t-name').value || '.........................';
+            document.getElementById('pdf-t-nic').innerText = document.getElementById('t-nic').value || '.........................';
+            document.getElementById('pdf-t-address').innerText = document.getElementById('t-address').value || '.........................';
+            
+            document.getElementById('pdf-prop-address').innerText = document.getElementById('prop-address').value || '.........................';
+            document.getElementById('pdf-rent').innerText = document.getElementById('rent-amount').value || '.............';
+            document.getElementById('pdf-advance').innerText = document.getElementById('advance-amount').value || '.............';
+            document.getElementById('pdf-start-date').innerText = document.getElementById('start-date').value || '.............';
+
+            // Split date for the intro sentence
+            const dateVal = document.getElementById('start-date').value;
+            if(dateVal) {
+                const dateParts = dateVal.split('-');
+                document.getElementById('pdf-year').innerText = dateParts[0];
+                document.getElementById('pdf-month').innerText = dateParts[1];
+                document.getElementById('pdf-day').innerText = dateParts[2];
+            }
+
+            // --- PRO Check ---
+            let isPro = window.isProUser === true;
+            
+            if (!isPro) {
+                document.getElementById('pdf-watermark-legal').style.display = 'block';
+            } else {
+                document.getElementById('pdf-watermark-legal').style.display = 'none';
+            }
+
+            // Render PDF
+            document.getElementById('legal-template-container').style.display = 'block';
+            const element = document.getElementById('pdf-content');
+            
+            const opt = {
+                margin:       0,
+                filename:     `Rent_Agreement_${document.getElementById('t-name').value || 'New'}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                document.getElementById('legal-template-container').style.display = 'none';
+                
+                if(!isPro) {
+                    alert("මෙම ලියවිල්ලේ 'Watermark' එක ඉවත් කිරීම සඳහා කරුණාකර Pahasu PRO වෙත Upgrade වන්න.");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
